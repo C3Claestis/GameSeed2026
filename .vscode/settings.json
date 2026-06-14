@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "GameSeed_2026.sln"
+    "dotnet.defaultSolution": "GameSeed2026.sln"
 }
