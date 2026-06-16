@@ -24,7 +24,7 @@ public class Customer : MonoBehaviour
     
     private void Awake()
     {
-        _image = GetComponent<Image>();
+        _image = GetComponentInChildren<Image>();
         if (_image)
         {
             _image.preserveAspect = true;

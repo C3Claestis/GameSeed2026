@@ -6,8 +6,10 @@ public class CashierStation : MonoBehaviour
     public static CashierStation Instance;
 
     private CustomerManager _customerManager;
-    private Customer _customer;
-    
+    public Customer Customer { get; private set; }
+
+    public Action OnNewCustomerEnter;
+
     private void Awake()
     {
         if (Instance)
@@ -17,17 +19,17 @@ public class CashierStation : MonoBehaviour
         }
         Instance = this;
         
-        _customer = GetComponentInChildren<Customer>();
+        Customer = GetComponentInChildren<Customer>();
     }
 
     private void OnEnable()
     {
-        if (_customer) _customer.OnCustomerOutOfPatience += OnCustomerOutOfPatience;
+        if (Customer) Customer.OnCustomerOutOfPatience += OnCustomerOutOfPatience;
     }
     
     private void OnDisable()
     {
-        if (_customer) _customer.OnCustomerOutOfPatience -= OnCustomerOutOfPatience;
+        if (Customer) Customer.OnCustomerOutOfPatience -= OnCustomerOutOfPatience;
     }
 
     private void Start()
@@ -38,13 +40,14 @@ public class CashierStation : MonoBehaviour
     [ContextMenu("Summon Customer")]
     public void SummonCustomer()
     {
-        if (!_customerManager || !_customer) return;
+        if (!_customerManager || !Customer) return;
 
-         _customer.Enter(_customerManager.GetRandomCustomer());
+         Customer.Enter(_customerManager.GetRandomCustomer());
+         OnNewCustomerEnter?.Invoke();
     }
 
     private void OnCustomerOutOfPatience()
     {
-        print($"Customer is out of Patience: {_customer.CustomerData}");
+        print($"Customer is out of Patience: {Customer.CustomerData}");
     }
 }
