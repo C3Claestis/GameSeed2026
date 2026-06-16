@@ -1,17 +1,20 @@
 using System;
-using LitMotion;
-using LitMotion.Extensions;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Customer : MonoBehaviour
 {
-    [SerializeField] private float patience = 30f;
     [SerializeField] private float fadeDuration;
 
+    private float _patience;
     private Image _image;
+    private TMP_Text _text;
+    private Sequence _fadeSequence;
+    private Tweener _patienceTween;
 
-    public float Patience => patience;
+    public float Patience => _patience;
     public CustomerData CustomerData { get; private set; }
     public MenuData MenuData { get; set; }
     public float CurrentPatience { get; set; }
@@ -22,12 +25,48 @@ public class Customer : MonoBehaviour
     private void Awake()
     {
         _image = GetComponent<Image>();
-        if (_image) _image.preserveAspect = true;
+        if (_image)
+        {
+            _image.preserveAspect = true;
+            _image.color = new Color(255, 255, 255, 0);
+        }
+        _text = transform.parent?.GetComponentInChildren<TMP_Text>();
     }
 
     private void Enter()
     {
-        if (_image) LMotion.Create(0f, 1f, fadeDuration).WithEase(Ease.InOutQuart).WithOnComplete(AfterFade).BindToColorA(_image);
+        const float fadeEnd = 1f;
+        
+        _fadeSequence?.Kill();
+        _patienceTween?.Kill();
+        
+        _fadeSequence = DOTween.Sequence()
+            .SetEase(Ease.InOutQuart)
+            .OnComplete(AfterFade);
+        
+        if (_image)
+        {
+            _image.color = new Color(255, 255, 255, 0);
+            var imageAnim = _image.DOFade(fadeEnd, fadeDuration);
+            _fadeSequence.Join(imageAnim);
+        }
+        if (_text)
+        {
+            _text.text = string.Empty;
+            var cg = _text.GetComponentInParent<CanvasGroup>();
+            if (cg)
+            {
+                cg.alpha = 0;
+                var textAnim = cg.DOFade(fadeEnd, fadeDuration);
+                _fadeSequence.Join(textAnim);
+            }
+            else
+            {
+                _text.color = new Color(255, 255, 255, 0);
+                var textAnim = _text.DOFade(fadeEnd, fadeDuration);
+                _fadeSequence.Join(textAnim);
+            }
+        }
     }
 
     private void AfterFade()
@@ -35,12 +74,11 @@ public class Customer : MonoBehaviour
         print($"Fade complete");
         MenuData = MenuManager.Instance?.GetRandomMenu();
         if (!MenuData) return;
+        _text.text = $"I want {MenuData.menuName}";
         OnCustomerOrderChanged?.Invoke(MenuData);
-        patience = CustomerData.patience;
-        LMotion.Create(0f, patience, patience)
-            .WithOnComplete(() => OnCustomerOutOfPatience?.Invoke())
-            .Bind(x => CurrentPatience = x);
-
+        _patience = CustomerData.patience;
+        _patienceTween = DOVirtual.Float(0f, _patience, _patience, value => CurrentPatience = value)
+            .OnComplete(() => OnCustomerOutOfPatience?.Invoke());
     }
 
     public void Enter(CustomerData data)
