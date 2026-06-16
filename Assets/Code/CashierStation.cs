@@ -35,6 +35,7 @@ public class CashierStation : MonoBehaviour
     private void Start()
     {
         _customerManager = CustomerManager.Instance;
+        SummonCustomer();
     }
 
     [ContextMenu("Summon Customer")]
