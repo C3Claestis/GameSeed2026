@@ -1,14 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuSelector : MonoBehaviour
 {
     [SerializeField] private GameObject menuPrefab;
     [SerializeField] private Transform contentHolder;
+    [SerializeField] private Canvas panelCanvas;
     [SerializeField] private Canvas contentCanvas;
+    [SerializeField] private Button orderUpButton;
 
     private CashierStation _cashierStation;
     private Customer _customer;
     private MenuManager _menuManager;
+    private readonly List<Menu> _menuButtonList = new();
+    private Menu _selectedMenu;
     
     private void Awake()
     {
@@ -18,6 +24,7 @@ public class MenuSelector : MonoBehaviour
     private void OnEnable()
     {
         Bind();
+        if (orderUpButton) orderUpButton.interactable = _selectedMenu;
     }
 
     private void OnDisable()
@@ -32,7 +39,7 @@ public class MenuSelector : MonoBehaviour
         Unbind();
         Bind();
         InitializeMenus();
-        SetCanvas(false);
+        SetCanvasContent(false);
     }
 
     private void Bind()
@@ -61,23 +68,32 @@ public class MenuSelector : MonoBehaviour
         }
     }
     
-    private void OnNewCustomerEnter()
-    {
-        SetCanvas(false);
-    }
-    
-    private void OnCustomerOrderChanged(MenuData obj)
-    {
-        print($"OnCustomerOrderChanged: {obj} | {menuPrefab} | {_menuManager}");
-        SetCanvas(true);
-    }
+    #region Canvas Manipulation
 
-    private void SetCanvas(bool value)
+    private void SetCanvasContent(bool value)
     {
         if (!contentCanvas) return;
         contentCanvas.enabled = value;
     }
 
+    private void SetCanvasPanel(bool value)
+    {
+        if (!panelCanvas) return;
+        panelCanvas.enabled = value;
+    }
+
+    #endregion
+    
+    private void OnNewCustomerEnter()
+    {
+        SetCanvasContent(false);
+    }
+    
+    private void OnCustomerOrderChanged(MenuData obj)
+    {
+        print($"OnCustomerOrderChanged: {obj} | {menuPrefab} | {_menuManager}");
+    }
+    
     private void InitializeMenus()
     {
         if (!menuPrefab) return;
@@ -86,9 +102,30 @@ public class MenuSelector : MonoBehaviour
             var menuGo = contentHolder ? Instantiate(menuPrefab, contentHolder) : Instantiate(menuPrefab, transform);
             if (menuGo.TryGetComponent(out Menu menu))
             {
+                _menuButtonList.Add(menu);
                 menu.menuData = data;
                 menu.SetText();
+                menu.OnSelected += HandleMenuButtonClicked;
             }
+        }
+    }
+
+    private void HandleMenuButtonClicked(Menu target)
+    {
+        if (target && _selectedMenu != target) _selectedMenu = target;
+        else if (target && _selectedMenu == target) _selectedMenu = null;
+        
+        if (orderUpButton) orderUpButton.interactable = _selectedMenu;
+        
+        foreach (var menu in _menuButtonList)
+        {
+            if (menu != _selectedMenu)
+            {
+                menu.Button.image.color = Color.white;
+                continue;
+            }
+
+            menu.Button.image.color = Color.yellow;
         }
     }
 }

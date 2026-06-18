@@ -1,5 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
@@ -8,9 +10,24 @@ public class Menu : MonoBehaviour
 
     private TMP_Text _text;
 
+    public Button Button { get; private set; }
+
+    public Action<Menu> OnSelected;
+
     private void Awake()
     {
         _text = GetComponentInChildren<TMP_Text>();
+        Button = GetComponent<Button>();
+    }
+
+    private void OnEnable()
+    {
+        if (Button) Button.onClick.AddListener(HandleClick);
+    }
+
+    private void OnDisable()
+    {
+        if (Button) Button.onClick.RemoveAllListeners();
     }
 
     public void SetText(string text)
@@ -23,5 +40,10 @@ public class Menu : MonoBehaviour
     {
         if (!menuData || !_text) return;
         SetText(menuData.menuName);
+    }
+    
+    private void HandleClick()
+    {
+        OnSelected?.Invoke(this);
     }
 }
