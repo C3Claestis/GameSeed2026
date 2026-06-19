@@ -1,4 +1,5 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class CashierStation : MonoBehaviour
@@ -38,7 +39,7 @@ public class CashierStation : MonoBehaviour
         SummonCustomer();
     }
 
-    [ContextMenu("Summon Customer")]
+    [ContextMenu("Summon Customer"), Button(enabledMode: EButtonEnableMode.Playmode)]
     public void SummonCustomer()
     {
         if (!_customerManager || !Customer) return;
