@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +25,6 @@ public class MenuSelector : MonoBehaviour
     private void OnEnable()
     {
         Bind();
-        if (orderUpButton) orderUpButton.interactable = _selectedMenu;
     }
 
     private void OnDisable()
@@ -54,6 +54,11 @@ public class MenuSelector : MonoBehaviour
             _customer.OnCustomerOrderChanged -= OnCustomerOrderChanged;
             _customer.OnCustomerOrderChanged += OnCustomerOrderChanged;
         }
+        if (orderUpButton)
+        {
+            orderUpButton.onClick.AddListener(HandleOrderUp);
+            orderUpButton.interactable = _selectedMenu;
+        }
     }
     
     private void Unbind()
@@ -66,6 +71,11 @@ public class MenuSelector : MonoBehaviour
         {
             _customer.OnCustomerOrderChanged -= OnCustomerOrderChanged;
         }
+        if (orderUpButton)
+        {
+            orderUpButton.onClick.RemoveListener(HandleOrderUp);
+        }
+
     }
     
     #region Canvas Manipulation
@@ -126,6 +136,21 @@ public class MenuSelector : MonoBehaviour
             }
 
             menu.Button.image.color = Color.yellow;
+        }
+    }
+    
+    private void HandleOrderUp()
+    {
+        if (!_selectedMenu || _selectedMenu.menuData != _customer.MenuData)
+        {
+            orderUpButton.interactable = false;
+            orderUpButton.image.color = Color.red;
+            orderUpButton.transform.DOShakePosition(0.8f, strength: 20f, vibrato: 30)
+                .OnComplete(() =>
+                {
+                    orderUpButton.interactable = true;
+                    orderUpButton.image.color = Color.white;
+                });
         }
     }
 }
