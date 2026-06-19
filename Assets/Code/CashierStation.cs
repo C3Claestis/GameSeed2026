@@ -2,9 +2,11 @@ using System;
 using NaughtyAttributes;
 using UnityEngine;
 
-public class CashierStation : MonoBehaviour
+public class CashierStation : MonoBehaviour, IStation
 {
     public static CashierStation Instance;
+
+    [field: SerializeField] public int StationId { get; private set; }
 
     private CustomerManager _customerManager;
     public Customer Customer { get; private set; }
@@ -51,5 +53,10 @@ public class CashierStation : MonoBehaviour
     private void OnCustomerOutOfPatience()
     {
         print($"Customer is out of Patience: {Customer.CustomerData}");
+    }
+
+    public void OpenStation()
+    {
+        
     }
 }

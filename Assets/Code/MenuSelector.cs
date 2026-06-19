@@ -10,12 +10,14 @@ public class MenuSelector : MonoBehaviour
     [SerializeField] private Canvas panelCanvas;
     [SerializeField] private Canvas contentCanvas;
     [SerializeField] private Button orderUpButton;
+    [SerializeField] private Button menuOpenerButton;
 
     private CashierStation _cashierStation;
     private Customer _customer;
     private MenuManager _menuManager;
     private readonly List<Menu> _menuButtonList = new();
     private Menu _selectedMenu;
+    private StationManager _stationManager;
     
     private void Awake()
     {
@@ -36,6 +38,7 @@ public class MenuSelector : MonoBehaviour
     {
         _customer = _cashierStation.Customer;
         _menuManager = MenuManager.Instance;
+        _stationManager = StationManager.Instance;
         Unbind();
         Bind();
         InitializeMenus();
@@ -151,6 +154,17 @@ public class MenuSelector : MonoBehaviour
                     orderUpButton.interactable = true;
                     orderUpButton.image.color = Color.white;
                 });
+            return;
         }
+        
+        if (!_stationManager) return;
+        SetPanelMenu(false);
+        _stationManager.GoToStation(_cashierStation.StationId, _stationManager.PrepStation.StationId);
+    }
+
+    public void SetPanelMenu(bool show)
+    {
+        if (contentCanvas) contentCanvas.enabled = show;
+        if (menuOpenerButton) menuOpenerButton.interactable = !show;
     }
 }

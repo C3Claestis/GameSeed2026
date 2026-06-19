@@ -680,9 +680,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8481276824810633266}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
+      - m_Target: {fileID: 7456077927434312543}
+        m_TargetAssemblyTypeName: MenuSelector, Assembly-CSharp
+        m_MethodName: SetPanelMenu
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -691,18 +691,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5544639419887946295}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: set_interactable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &3462048705855144818
 GameObject:
@@ -1501,7 +1489,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1040450891576017969}
   m_HandleRect: {fileID: 2623777599982408092}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1604,6 +1592,7 @@ MonoBehaviour:
   panelCanvas: {fileID: 5224649337025699323}
   contentCanvas: {fileID: 8481276824810633266}
   orderUpButton: {fileID: 9116067725846055483}
+  menuOpenerButton: {fileID: 5544639419887946295}
 --- !u!1 &6232804948961621471
 GameObject:
   m_ObjectHideFlags: 0
@@ -1725,21 +1714,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5544639419887946295}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: set_interactable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8481276824810633266}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
+      - m_Target: {fileID: 7456077927434312543}
+        m_TargetAssemblyTypeName: MenuSelector, Assembly-CSharp
+        m_MethodName: SetPanelMenu
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2425,6 +2402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79037e6774aa83e46b8a5448014b8076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StationId>k__BackingField: 0
 --- !u!1 &9074143136919813486
 GameObject:
   m_ObjectHideFlags: 0
