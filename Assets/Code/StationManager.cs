@@ -95,20 +95,20 @@ public class StationManager : MonoBehaviour
             FadeStation(false, callback: () =>
             {
                 _stationCanvases[from].enabled = false;
+                _stationCanvases[to].enabled = true;
                 FadeStation(true, callback: () =>
                 {
                     if (_faderCanvas) _faderCanvas.enabled = false;
-                    _stationCanvases[to].enabled = true;
                 });
             });
 
         FadeStation(true, callback: () =>
         {
             _stationCanvases[from].enabled = false;
+            _stationCanvases[to].enabled = true;
             FadeStation(false, true, () =>
             {
                 if (_faderCanvas) _faderCanvas.enabled = false;
-                _stationCanvases[to].enabled = true;
             });
         });
     }
