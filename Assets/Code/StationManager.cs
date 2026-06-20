@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
@@ -8,15 +9,15 @@ public class StationManager : MonoBehaviour
 {
     public static StationManager Instance;
 
-    [SerializeField] private CashierStation _cashierStation;
-    [SerializeField] private PrepStation _prepStation;
     [SerializeField] private Image _fader;
 
     private Canvas _faderCanvas;
+    private IStation[] _stations;
+    private Canvas[] _stationCanvases;
     
-    public CashierStation CashierStation => _cashierStation;
-    public PrepStation PrepStation => _prepStation;
-    
+    public CashierStation CashierStation { get; private set; }
+    public PrepStation PrepStation { get; private set; }
+
     private void Awake()
     {
         if (Instance)
@@ -25,9 +26,44 @@ public class StationManager : MonoBehaviour
             return;
         }
         Instance = this;
+        
         if (_fader)
         {
             if (_fader.TryGetComponent(out _faderCanvas)) _faderCanvas.enabled = false;
+        }
+
+        _stations = GetComponentsInChildren<IStation>();
+        _stationCanvases = new Canvas[_stations.Length];
+        
+        for (var i = 0; i < _stations.Length; i++)
+        {
+            var station = _stations[i];
+            var canvas = (station as MonoBehaviour)?.GetComponent<Canvas>();
+            if (canvas)
+            {
+                _stationCanvases[i] = canvas;
+            }
+            switch (station)
+            {
+                case CashierStation cashier:
+                    CashierStation = cashier;
+                    break;
+                case PrepStation prep:
+                    PrepStation = prep;
+                    break;
+            }
+        }
+    }
+
+    private void Start()
+    {
+        if (_stations.Length > 0)
+        {
+            if (_stationCanvases[0]) _stationCanvases[0].enabled = true;
+            for (var i = 1; i < _stationCanvases.Length; i++)
+            {
+                if (_stationCanvases[i]) _stationCanvases[i].enabled = false;
+            }
         }
     }
 
@@ -56,21 +92,23 @@ public class StationManager : MonoBehaviour
     public void GoToStation(int from, int to)
     {
         if (from > to)
-        {
             FadeStation(false, callback: () =>
             {
+                _stationCanvases[from].enabled = false;
                 FadeStation(true, callback: () =>
                 {
                     if (_faderCanvas) _faderCanvas.enabled = false;
+                    _stationCanvases[to].enabled = true;
                 });
             });
-        }
 
         FadeStation(true, callback: () =>
         {
-            FadeStation(false, true, callback: () =>
+            _stationCanvases[from].enabled = false;
+            FadeStation(false, true, () =>
             {
                 if (_faderCanvas) _faderCanvas.enabled = false;
+                _stationCanvases[to].enabled = true;
             });
         });
     }
