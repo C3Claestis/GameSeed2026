@@ -14,7 +14,8 @@ public class StationManager : MonoBehaviour
     private Canvas _faderCanvas;
     private IStation[] _stations;
     private Canvas[] _stationCanvases;
-    
+
+    public int ActiveStation { get; private set; } = 0;
     public CashierStation CashierStation { get; private set; }
     public PrepStation PrepStation { get; private set; }
 
@@ -94,6 +95,7 @@ public class StationManager : MonoBehaviour
         if (from > to)
             FadeStation(false, callback: () =>
             {
+                ActiveStation = to;
                 _stationCanvases[from].enabled = false;
                 _stationCanvases[to].enabled = true;
                 FadeStation(true, callback: () =>
@@ -104,6 +106,7 @@ public class StationManager : MonoBehaviour
 
         FadeStation(true, callback: () =>
         {
+            ActiveStation = to;
             _stationCanvases[from].enabled = false;
             _stationCanvases[to].enabled = true;
             FadeStation(false, true, () =>
@@ -112,4 +115,7 @@ public class StationManager : MonoBehaviour
             });
         });
     }
+
+    public void GoToCashierStation() => GoToStation(ActiveStation, CashierStation.StationId);
+    public void GoToPrepStation() => GoToStation(ActiveStation, PrepStation.StationId);
 }

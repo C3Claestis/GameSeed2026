@@ -1,4 +1,5 @@
 using System;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
     [Tooltip("Assigned from Menu Selector")]
-    public MenuData menuData;
+    [ReadOnly] public MenuData menuData;
 
     private TMP_Text _text;
 

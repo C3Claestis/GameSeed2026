@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class MenuSelector : MonoBehaviour
 {
+    [SerializeField] private float falseShakeDuration = 0.5f;
+    
+    [Header("References")]
     [SerializeField] private GameObject menuPrefab;
     [SerializeField] private Transform contentHolder;
     [SerializeField] private Canvas panelCanvas;
@@ -18,6 +21,7 @@ public class MenuSelector : MonoBehaviour
     private readonly List<Menu> _menuButtonList = new();
     private Menu _selectedMenu;
     private StationManager _stationManager;
+    private bool _canSelect = true;
     
     private void Awake()
     {
@@ -60,7 +64,7 @@ public class MenuSelector : MonoBehaviour
         if (orderUpButton)
         {
             orderUpButton.onClick.AddListener(HandleOrderUp);
-            orderUpButton.interactable = _selectedMenu;
+            orderUpButton.interactable = _selectedMenu && _canSelect;
         }
     }
     
@@ -128,7 +132,7 @@ public class MenuSelector : MonoBehaviour
         if (target && _selectedMenu != target) _selectedMenu = target;
         else if (target && _selectedMenu == target) _selectedMenu = null;
         
-        if (orderUpButton) orderUpButton.interactable = _selectedMenu;
+        if (orderUpButton) orderUpButton.interactable = _selectedMenu && _canSelect;
         
         foreach (var menu in _menuButtonList)
         {
@@ -146,12 +150,14 @@ public class MenuSelector : MonoBehaviour
     {
         if (!_selectedMenu || _selectedMenu.menuData != _customer.MenuData)
         {
-            orderUpButton.interactable = false;
+            _canSelect = false;
+            orderUpButton.interactable = _canSelect;
             orderUpButton.image.color = Color.red;
-            orderUpButton.transform.DOShakePosition(0.8f, strength: 20f, vibrato: 30)
+            orderUpButton.transform.DOShakePosition(falseShakeDuration, strength: 20f, vibrato: 30)
                 .OnComplete(() =>
                 {
-                    orderUpButton.interactable = true;
+                    _canSelect = true;
+                    orderUpButton.interactable = _selectedMenu && _canSelect;
                     orderUpButton.image.color = Color.white;
                 });
             return;
