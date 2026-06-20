@@ -13,7 +13,8 @@ public class StationManager : MonoBehaviour
 
     private Canvas _faderCanvas;
     private IStation[] _stations;
-    private Canvas[] _stationCanvases;
+    private CanvasGroup[] _stationCanvases;
+    private CanvasGroup _mainCanvas;
 
     public int ActiveStation { get; private set; } = 0;
     public CashierStation CashierStation { get; private set; }
@@ -27,23 +28,21 @@ public class StationManager : MonoBehaviour
             return;
         }
         Instance = this;
-        
+
+        TryGetComponent(out _mainCanvas);
         if (_fader)
         {
             if (_fader.TryGetComponent(out _faderCanvas)) _faderCanvas.enabled = false;
         }
 
         _stations = GetComponentsInChildren<IStation>();
-        _stationCanvases = new Canvas[_stations.Length];
+        _stationCanvases = new CanvasGroup[_stations.Length];
         
         for (var i = 0; i < _stations.Length; i++)
         {
             var station = _stations[i];
-            var canvas = (station as MonoBehaviour)?.GetComponent<Canvas>();
-            if (canvas)
-            {
-                _stationCanvases[i] = canvas;
-            }
+            var canvas = (station as MonoBehaviour)?.GetComponent<CanvasGroup>();
+            if (canvas) _stationCanvases[i] = canvas;
             switch (station)
             {
                 case CashierStation cashier:
@@ -60,20 +59,20 @@ public class StationManager : MonoBehaviour
     {
         if (_stations.Length > 0)
         {
-            if (_stationCanvases[0]) _stationCanvases[0].enabled = true;
-            for (var i = 1; i < _stationCanvases.Length; i++)
-            {
-                if (_stationCanvases[i]) _stationCanvases[i].enabled = false;
-            }
+            SetCanvasStation(0, true);
+            for (var i = 1; i < _stationCanvases.Length; i++) SetCanvasStation(i, false);
         }
     }
 
-    [Button(enabledMode: EButtonEnableMode.Playmode)]
-    public void FadeRight()
+    private void SetCanvasStation(int index, bool value)
     {
-        FadeStation(true);
+        if (!_stationCanvases[index]) return;
+        _stationCanvases[index].alpha = value ? 1 : 0;
+        _stationCanvases[index].interactable = value;
+        _stationCanvases[index].blocksRaycasts = value;
+        
     }
-    
+
     public void FadeStation(bool right, bool invert = false, Action callback = null)
     {
         if (!_fader)
@@ -92,26 +91,30 @@ public class StationManager : MonoBehaviour
 
     public void GoToStation(int from, int to)
     {
+        if (ActiveStation == from && ActiveStation == to) return;
+        if (_mainCanvas) _mainCanvas.interactable = false;
         if (from > to)
             FadeStation(false, callback: () =>
             {
                 ActiveStation = to;
-                _stationCanvases[from].enabled = false;
-                _stationCanvases[to].enabled = true;
+                SetCanvasStation(from, false);
+                SetCanvasStation(to, true);
                 FadeStation(true, callback: () =>
                 {
                     if (_faderCanvas) _faderCanvas.enabled = false;
+                    if (_mainCanvas) _mainCanvas.interactable = true;
                 });
             });
 
         FadeStation(true, callback: () =>
         {
             ActiveStation = to;
-            _stationCanvases[from].enabled = false;
-            _stationCanvases[to].enabled = true;
+            SetCanvasStation(from, false);
+            SetCanvasStation(to, true);
             FadeStation(false, true, () =>
             {
                 if (_faderCanvas) _faderCanvas.enabled = false;
+                if (_mainCanvas) _mainCanvas.interactable = true;
             });
         });
     }

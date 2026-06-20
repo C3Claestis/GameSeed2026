@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2225572818177624999}
   - component: {fileID: 7056818677729487943}
   - component: {fileID: 1184264458714992980}
+  - component: {fileID: 7737569146175623947}
   - component: {fileID: 5700551335687427370}
   m_Layer: 5
   m_Name: Canvas Prep Station
@@ -79,6 +80,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &7737569146175623947
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2603025266578658768}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &5700551335687427370
 MonoBehaviour:
   m_ObjectHideFlags: 0

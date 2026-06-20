@@ -512,6 +512,7 @@ GameObject:
   - component: {fileID: 278762831969795929}
   - component: {fileID: 7467575236448009133}
   - component: {fileID: 2646217269547269551}
+  - component: {fileID: 2336164414786360168}
   - component: {fileID: 7008379023435291278}
   m_Layer: 5
   m_Name: Gameplay Canvas
@@ -607,6 +608,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &2336164414786360168
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5402817417820672992}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &7008379023435291278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,6 +830,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2623777599982408092, guid: fc9c94a2844c62244aded267b90fbdf4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4708239490648666153, guid: fc9c94a2844c62244aded267b90fbdf4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -932,6 +949,10 @@ PrefabInstance:
     - target: {fileID: 5161409547286336809, guid: fc9c94a2844c62244aded267b90fbdf4, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5463335117229104528, guid: fc9c94a2844c62244aded267b90fbdf4, type: 3}
+      propertyPath: m_Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8910963127670271582, guid: fc9c94a2844c62244aded267b90fbdf4, type: 3}
       propertyPath: m_Name

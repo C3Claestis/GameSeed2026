@@ -1489,7 +1489,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1040450891576017969}
   m_HandleRect: {fileID: 2623777599982408092}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2321,6 +2321,7 @@ GameObject:
   - component: {fileID: 4708239490648666153}
   - component: {fileID: 4493201830293149641}
   - component: {fileID: 5754067814914304730}
+  - component: {fileID: 1320396830632521956}
   - component: {fileID: 6504620931997500799}
   m_Layer: 5
   m_Name: Canvas Cashier Station
@@ -2391,6 +2392,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &1320396830632521956
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8910963127670271582}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &6504620931997500799
 MonoBehaviour:
   m_ObjectHideFlags: 0
