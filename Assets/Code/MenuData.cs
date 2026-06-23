@@ -5,4 +5,5 @@ public class MenuData : ScriptableObject
 {
     public string menuName;
     public Sprite menuSprite;
+    [SerializeReference] public RecipeTask[] recipesTask;
 }
