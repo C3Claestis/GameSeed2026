@@ -15,11 +15,24 @@ MonoBehaviour:
   menuName: Mie Goreng
   menuSprite: {fileID: 0}
   recipesTask:
-  - rid: 4277192024756322305
+  - rid: 4277192024756322306
+  - rid: 4277192024756322308
   references:
     version: 2
     RefIds:
-    - rid: 4277192024756322305
+    - rid: 4277192024756322306
       type: {class: RTGetIngredient, ns: , asm: Assembly-CSharp}
       data:
+        completed: 0
         ingredient: {fileID: 0}
+    - rid: 4277192024756322308
+      type: {class: RTCutIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        cutSteps:
+        - knifePosition: {x: 0, y: 0}
+          sprite: {fileID: 0}
+          completed: 0
+        - knifePosition: {x: 0, y: 0}
+          sprite: {fileID: 0}
+          completed: 0
