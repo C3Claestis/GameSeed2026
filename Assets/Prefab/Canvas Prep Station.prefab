@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 3765319343542208019}
   - component: {fileID: 3784079523366948351}
   - component: {fileID: 3183949189132267107}
+  - component: {fileID: 8592122278055547499}
   m_Layer: 5
   m_Name: Button Steak
   m_TagString: Untagged
@@ -408,6 +409,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8592122278055547499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3622652078114879733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107d6ac6f9e348b4a8e5e492b8ab5243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredient: {fileID: 11400000, guid: 19c3055117efd3f4a9cc86877178bc5c, type: 2}
 --- !u!1 &3775407988299925295
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,6 +434,7 @@ GameObject:
   - component: {fileID: 3067320636164200156}
   - component: {fileID: 1687597177203243577}
   - component: {fileID: 6911325293324117163}
+  - component: {fileID: 3002872453436358500}
   m_Layer: 5
   m_Name: Button Mie
   m_TagString: Untagged
@@ -529,6 +544,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3002872453436358500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3775407988299925295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107d6ac6f9e348b4a8e5e492b8ab5243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredient: {fileID: 11400000, guid: d8aa01acac5b0da4fb554d8f77c1bf81, type: 2}
 --- !u!1 &3871592876017937469
 GameObject:
   m_ObjectHideFlags: 0
@@ -541,6 +569,7 @@ GameObject:
   - component: {fileID: 2062678359345206823}
   - component: {fileID: 80211357025818592}
   - component: {fileID: 9123722122026991668}
+  - component: {fileID: 7000358699197953345}
   m_Layer: 5
   m_Name: Button Nasi
   m_TagString: Untagged
@@ -650,6 +679,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7000358699197953345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3871592876017937469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107d6ac6f9e348b4a8e5e492b8ab5243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredient: {fileID: 11400000, guid: 6bb6905b8f610a8419f6ecf8d45922d7, type: 2}
 --- !u!1 &4214746980347537148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1064,6 +1106,7 @@ GameObject:
   - component: {fileID: 1073161596262617940}
   - component: {fileID: 3001181794749080726}
   - component: {fileID: 6141330417490891577}
+  - component: {fileID: 1232606764003499530}
   m_Layer: 5
   m_Name: Button Bawang Putih
   m_TagString: Untagged
@@ -1173,6 +1216,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1232606764003499530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5578583854246621803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107d6ac6f9e348b4a8e5e492b8ab5243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredient: {fileID: 11400000, guid: 1ccd6cb8923bf6b4a8041eb4e05a14f0, type: 2}
 --- !u!1 &5644300602586309547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1705,10 +1761,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8428527170182701580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 181}
+  m_SizeDelta: {x: 0, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7176529120261474740
 CanvasRenderer:
@@ -1765,8 +1821,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

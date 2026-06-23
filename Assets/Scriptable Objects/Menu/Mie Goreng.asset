@@ -14,3 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuName: Mie Goreng
   menuSprite: {fileID: 0}
+  recipesTask:
+  - rid: 4277192024756322305
+  references:
+    version: 2
+    RefIds:
+    - rid: 4277192024756322305
+      type: {class: RTGetIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        ingredient: {fileID: 0}

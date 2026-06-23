@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 
 [Serializable]
-public class RecipeTask
+public abstract class RecipeTask
 {
-    
+    public bool completed;
 }
 
 [Serializable]
-public class RecipeTaskNasiGoreng : RecipeTask
+public class RTCutIngredient : RecipeTask
 {
-    
+    public List<CutStep> cutSteps = new();
 }
