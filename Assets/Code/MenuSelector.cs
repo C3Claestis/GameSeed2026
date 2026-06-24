@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -19,24 +20,19 @@ public class MenuSelector : MonoBehaviour
     private Customer _customer;
     private MenuManager _menuManager;
     private readonly List<Menu> _menuButtonList = new();
-    private Menu _selectedMenu;
     private StationManager _stationManager;
     private bool _canSelect = true;
+
+    public Menu SelectedMenu { get; private set; }
     
     private void Awake()
     {
         _cashierStation = GetComponentInParent<CashierStation>();
     }
 
-    private void OnEnable()
-    {
-        Bind();
-    }
+    private void OnEnable() => Bind();
 
-    private void OnDisable()
-    {
-        Unbind();
-    }
+    private void OnDisable() => Unbind();
 
     private void Start()
     {
@@ -48,6 +44,8 @@ public class MenuSelector : MonoBehaviour
         InitializeMenus();
         SetCanvasContent(false);
     }
+
+    #region Events
 
     private void Bind()
     {
@@ -64,7 +62,7 @@ public class MenuSelector : MonoBehaviour
         if (orderUpButton)
         {
             orderUpButton.onClick.AddListener(HandleOrderUp);
-            orderUpButton.interactable = _selectedMenu && _canSelect;
+            orderUpButton.interactable = SelectedMenu && _canSelect;
         }
     }
     
@@ -84,6 +82,8 @@ public class MenuSelector : MonoBehaviour
         }
 
     }
+
+    #endregion
     
     #region Canvas Manipulation
 
@@ -129,14 +129,14 @@ public class MenuSelector : MonoBehaviour
 
     private void HandleMenuButtonClicked(Menu target)
     {
-        if (target && _selectedMenu != target) _selectedMenu = target;
-        else if (target && _selectedMenu == target) _selectedMenu = null;
+        if (target && SelectedMenu != target) SelectedMenu = target;
+        else if (target && SelectedMenu == target) SelectedMenu = null;
         
-        if (orderUpButton) orderUpButton.interactable = _selectedMenu && _canSelect;
+        if (orderUpButton) orderUpButton.interactable = SelectedMenu && _canSelect;
         
         foreach (var menu in _menuButtonList)
         {
-            if (menu != _selectedMenu)
+            if (menu != SelectedMenu)
             {
                 menu.Button.image.color = Color.white;
                 continue;
@@ -148,7 +148,7 @@ public class MenuSelector : MonoBehaviour
     
     private void HandleOrderUp()
     {
-        if (!_selectedMenu || _selectedMenu.menuData != _customer.MenuData)
+        if (!SelectedMenu || SelectedMenu.menuData != _customer.MenuData)
         {
             _canSelect = false;
             orderUpButton.interactable = _canSelect;
@@ -157,7 +157,7 @@ public class MenuSelector : MonoBehaviour
                 .OnComplete(() =>
                 {
                     _canSelect = true;
-                    orderUpButton.interactable = _selectedMenu && _canSelect;
+                    orderUpButton.interactable = SelectedMenu && _canSelect;
                     orderUpButton.image.color = Color.white;
                 });
             return;

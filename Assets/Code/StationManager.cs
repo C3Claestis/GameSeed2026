@@ -11,12 +11,11 @@ public class StationManager : MonoBehaviour
     [SerializeField] private Image _fader;
 
     private Canvas _faderCanvas;
-    private IStation[] _stations;
     private CanvasGroup[] _stationCanvases;
     private CanvasGroup _mainCanvas;
-
     private readonly Dictionary<Type, IStation> _stationDictionary = new();
-
+    private IStation[] _stationIndexes;
+    
     public int ActiveStation { get; private set; } = 0;
 
     private void Awake()
@@ -34,12 +33,15 @@ public class StationManager : MonoBehaviour
             _faderCanvas.enabled = false;
         }
 
-        _stations = GetComponentsInChildren<IStation>();
-        _stationCanvases = new CanvasGroup[_stations.Length];
+        var stations = GetComponentsInChildren<IStation>();
+        _stationCanvases = new CanvasGroup[stations.Length];
+        _stationIndexes = new IStation[stations.Length];
         
-        for (var i = 0; i < _stations.Length; i++)
+        for (var i = 0; i < stations.Length; i++)
         {
-            var station = _stations[i];
+            var station = stations[i];
+            if (station == null) continue;
+            _stationIndexes[station.StationId] = station;
 
             var canvas = (station as MonoBehaviour)?.GetComponent<CanvasGroup>();
             if (canvas) _stationCanvases[i] = canvas;
@@ -54,7 +56,7 @@ public class StationManager : MonoBehaviour
 
     private void Start()
     {
-        if (_stations.Length > 0)
+        if (_stationIndexes.Length > 0)
         {
             SetCanvasStation(0, true);
             for (var i = 1; i < _stationCanvases.Length; i++) SetCanvasStation(i, false);
@@ -99,29 +101,31 @@ public class StationManager : MonoBehaviour
     {
         if (ActiveStation == from && ActiveStation == to) return;
         if (_mainCanvas) _mainCanvas.interactable = false;
-        
         var right = to > from;
-        
         if (from > to)
         {
-            FadeStation(!right, callback: () =>
+            FadeStation(right, callback: () =>
             {
                 ActiveStation = to;
                 SetCanvasStation(from, false);
                 SetCanvasStation(to, true);
-                FadeStation(right, callback: () =>
+                _stationIndexes[from].OnClose();
+                _stationIndexes[to].OnOpen();
+                FadeStation(!right, true, callback: () =>
                 {
                     if (_faderCanvas) _faderCanvas.enabled = false;
                     if (_mainCanvas) _mainCanvas.interactable = true;
                 });
             });
+            return;
         }
-
         FadeStation(right, callback: () =>
         {
             ActiveStation = to;
             SetCanvasStation(from, false);
             SetCanvasStation(to, true);
+            _stationIndexes[from].OnClose();
+            _stationIndexes[to].OnOpen();
             FadeStation(!right, true, () =>
             {
                 if (_faderCanvas) _faderCanvas.enabled = false;

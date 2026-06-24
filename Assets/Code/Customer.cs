@@ -89,8 +89,5 @@ public class Customer : MonoBehaviour
         Enter();
     }
 
-    public void SetData(CustomerData data)
-    {
-        CustomerData = data;
-    }
+    public void SetData(CustomerData data) => CustomerData = Instantiate(data);
 }
