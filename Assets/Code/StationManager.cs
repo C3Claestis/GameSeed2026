@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,9 +15,9 @@ public class StationManager : MonoBehaviour
     private CanvasGroup[] _stationCanvases;
     private CanvasGroup _mainCanvas;
 
+    private readonly Dictionary<Type, IStation> _stationDictionary = new();
+
     public int ActiveStation { get; private set; } = 0;
-    public CashierStation CashierStation { get; private set; }
-    public PrepStation PrepStation { get; private set; }
 
     private void Awake()
     {
@@ -30,9 +29,9 @@ public class StationManager : MonoBehaviour
         Instance = this;
 
         TryGetComponent(out _mainCanvas);
-        if (_fader)
+        if (_fader && _fader.TryGetComponent(out _faderCanvas))
         {
-            if (_fader.TryGetComponent(out _faderCanvas)) _faderCanvas.enabled = false;
+            _faderCanvas.enabled = false;
         }
 
         _stations = GetComponentsInChildren<IStation>();
@@ -41,16 +40,14 @@ public class StationManager : MonoBehaviour
         for (var i = 0; i < _stations.Length; i++)
         {
             var station = _stations[i];
+
             var canvas = (station as MonoBehaviour)?.GetComponent<CanvasGroup>();
             if (canvas) _stationCanvases[i] = canvas;
-            switch (station)
+
+            var stationType = station.GetType();
+            if (!_stationDictionary.TryAdd(stationType, station))
             {
-                case CashierStation cashier:
-                    CashierStation = cashier;
-                    break;
-                case PrepStation prep:
-                    PrepStation = prep;
-                    break;
+                Debug.LogWarning($"Multiple stations of type {stationType.Name} found!");
             }
         }
     }
@@ -64,20 +61,29 @@ public class StationManager : MonoBehaviour
         }
     }
 
+    public T GetStation<T>() where T : class, IStation
+    {
+        if (_stationDictionary.TryGetValue(typeof(T), out var station))
+        {
+            return station as T;
+        }
+        Debug.LogError($"Station of type {typeof(T).Name} not found!");
+        return null;
+    }
+
     private void SetCanvasStation(int index, bool value)
     {
-        if (!_stationCanvases[index]) return;
+        if (index < 0 || index >= _stationCanvases.Length || !_stationCanvases[index]) return;
         _stationCanvases[index].alpha = value ? 1 : 0;
         _stationCanvases[index].interactable = value;
         _stationCanvases[index].blocksRaycasts = value;
-        
     }
 
     public void FadeStation(bool right, bool invert = false, Action callback = null)
     {
         if (!_fader)
         {
-            print($"No Fader");
+            print("No Fader");
             return;
         }
         if (_faderCanvas) _faderCanvas.enabled = true;
@@ -93,25 +99,30 @@ public class StationManager : MonoBehaviour
     {
         if (ActiveStation == from && ActiveStation == to) return;
         if (_mainCanvas) _mainCanvas.interactable = false;
+        
+        var right = to > from;
+        
         if (from > to)
-            FadeStation(false, callback: () =>
+        {
+            FadeStation(!right, callback: () =>
             {
                 ActiveStation = to;
                 SetCanvasStation(from, false);
                 SetCanvasStation(to, true);
-                FadeStation(true, callback: () =>
+                FadeStation(right, callback: () =>
                 {
                     if (_faderCanvas) _faderCanvas.enabled = false;
                     if (_mainCanvas) _mainCanvas.interactable = true;
                 });
             });
+        }
 
-        FadeStation(true, callback: () =>
+        FadeStation(right, callback: () =>
         {
             ActiveStation = to;
             SetCanvasStation(from, false);
             SetCanvasStation(to, true);
-            FadeStation(false, true, () =>
+            FadeStation(!right, true, () =>
             {
                 if (_faderCanvas) _faderCanvas.enabled = false;
                 if (_mainCanvas) _mainCanvas.interactable = true;
@@ -119,6 +130,17 @@ public class StationManager : MonoBehaviour
         });
     }
 
-    public void GoToCashierStation() => GoToStation(ActiveStation, CashierStation.StationId);
-    public void GoToPrepStation() => GoToStation(ActiveStation, PrepStation.StationId);
+    public void GoToStation<T>() where T : class, IStation
+    {
+        var targetStation = GetStation<T>();
+        if (targetStation != null)
+        {
+            GoToStation(ActiveStation, targetStation.StationId);
+        }
+    }
+
+    public void GoToStation(int stationId)
+    {
+        GoToStation(ActiveStation, stationId);
+    }
 }

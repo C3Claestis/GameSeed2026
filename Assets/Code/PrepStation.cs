@@ -9,11 +9,6 @@ public class PrepStation : MonoBehaviour, IStation
     
     private void Start()
     {
-        _cashier = StationManager.Instance?.CashierStation;
-    }
-
-    public void OpenStation()
-    {
-        
+        _cashier = StationManager.Instance?.GetStation<CashierStation>();
     }
 }

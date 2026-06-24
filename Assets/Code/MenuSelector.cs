@@ -165,7 +165,7 @@ public class MenuSelector : MonoBehaviour
         
         if (!_stationManager) return;
         SetPanelMenu(false);
-        _stationManager.GoToStation(_cashierStation.StationId, _stationManager.PrepStation.StationId);
+        _stationManager.GoToStation(_cashierStation.StationId, _stationManager.GetStation<PrepStation>()?.StationId ?? 0);
     }
 
     public void SetPanelMenu(bool show)
