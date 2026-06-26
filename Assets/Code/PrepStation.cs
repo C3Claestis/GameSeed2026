@@ -49,6 +49,6 @@ public class PrepStation : MonoBehaviour, IStation
         var menu = _cashier.CurrentMenu;
         if (menu == null) return;
 
-        _selector.UpdateMenuName(menu.menuName);
+        _selector.Initialize(menu);
     }
 }

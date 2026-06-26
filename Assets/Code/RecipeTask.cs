@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public abstract class RecipeTask
 {
     public bool completed;
+    public string description;
 }
 
 [Serializable]

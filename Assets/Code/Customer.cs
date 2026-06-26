@@ -17,6 +17,7 @@ public class Customer : MonoBehaviour
     public float Patience => _patience;
     public CustomerData CustomerData { get; private set; }
     public MenuData MenuData { get; set; }
+    public MenuData MenuSource { get; private set; }
     public float CurrentPatience { get; set; }
     
     public Action<MenuData> OnCustomerOrderChanged;
@@ -72,7 +73,9 @@ public class Customer : MonoBehaviour
     private void AfterFade()
     {
         print($"Fade complete");
-        MenuData = MenuManager.Instance?.GetRandomMenu();
+        MenuSource = MenuManager.Instance?.GetRandomMenu();
+        if (!MenuSource) return;
+        MenuData = Instantiate(MenuSource);
         if (!MenuData) return;
         _text.text = $"I want {MenuData.menuName}";
         OnCustomerOrderChanged?.Invoke(MenuData);

@@ -14,3 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuName: Nasi Goreng
   menuSprite: {fileID: 0}
+  recipesTask:
+  - rid: 4277192093133438976
+  references:
+    version: 2
+    RefIds:
+    - rid: 4277192093133438976
+      type: {class: RTGetIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        description: Get Rice
+        ingredient: {fileID: 11400000, guid: 6bb6905b8f610a8419f6ecf8d45922d7, type: 2}

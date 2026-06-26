@@ -24,11 +24,13 @@ MonoBehaviour:
       type: {class: RTGetIngredient, ns: , asm: Assembly-CSharp}
       data:
         completed: 0
+        description: Get Noodle
         ingredient: {fileID: 11400000, guid: d8aa01acac5b0da4fb554d8f77c1bf81, type: 2}
     - rid: 4277192024756322308
       type: {class: RTCutIngredient, ns: , asm: Assembly-CSharp}
       data:
         completed: 0
+        description: Chop Garlic
         cutSteps:
         - knifePosition: {x: 0, y: 0}
           sprite: {fileID: 0}
