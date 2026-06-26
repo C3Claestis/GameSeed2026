@@ -12,7 +12,10 @@ public class CashierStation : MonoBehaviour, IStation
     private MenuSelector _selector;
     
     public Customer Customer { get; private set; }
-    public MenuData CurrentMenu => _selector?.SelectedMenu.menuData;
+    public MenuData CurrentMenu =>
+        _selector != null && _selector.SelectedMenu != null
+            ? _selector.SelectedMenu.menuData
+            : null;
 
     public Action OnNewCustomerEnter;
 
