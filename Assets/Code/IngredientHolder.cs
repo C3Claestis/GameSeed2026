@@ -23,7 +23,11 @@ public class IngredientHolder : MonoBehaviour
         if (!_cashier || !_cashier.CurrentMenu || _cashier.CurrentMenu.recipesTask.Length <= 0) return;
         foreach (var task in _cashier.CurrentMenu.recipesTask)
         {
-            if (task is RTGetIngredient rtgi && rtgi.ingredient == Ingredient) rtgi.completed = true;
+            if (task is RTGetIngredient rtgi && rtgi.ingredient == Ingredient)
+            {
+                rtgi.completed = true;
+                _prep?.UpdatePrep();
+            }
         }
     }
 }
