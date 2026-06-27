@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3798a31952daeee4eba5f1f8e118e4f7, type: 3}
+  m_Name: Mie Goreng
+  m_EditorClassIdentifier: 
+  menuName: Mie Goreng
+  menuSprite: {fileID: 0}
+  recipesTask:
+  - rid: 4277192024756322306
+  - rid: 4277192024756322308
+  references:
+    version: 2
+    RefIds:
+    - rid: 4277192024756322306
+      type: {class: RTGetIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        ingredient: {fileID: 0}
+    - rid: 4277192024756322308
+      type: {class: RTCutIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        cutSteps:
+        - knifePosition: {x: 0, y: 0}
+          sprite: {fileID: 0}
+          completed: 0
+        - knifePosition: {x: 0, y: 0}
+          sprite: {fileID: 0}
+          completed: 0
