@@ -5,6 +5,7 @@ using UnityEngine;
 [Serializable]
 public class RTCutIngredient : RecipeTask
 {
+    public Ingredient ingredient;
     public List<CutStep> cutSteps = new();
     public Sprite resultSprite;
 }

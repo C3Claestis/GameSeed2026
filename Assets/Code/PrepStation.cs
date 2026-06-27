@@ -66,8 +66,10 @@ public class PrepStation : MonoBehaviour, IStation
         _selector.Initialize(menu);
     }
 
-    public void Chop()
+    public void Chop(RTCutIngredient menu)
     {
-        _chop?.SetCanvas(false);
+        if (!_chop) return;
+        _chop.SetCanvas(true);
+        _chop.Initialize(menu);
     }
 }
