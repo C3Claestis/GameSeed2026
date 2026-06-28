@@ -19,24 +19,20 @@ public class MenuSelector : MonoBehaviour
     private Customer _customer;
     private MenuManager _menuManager;
     private readonly List<Menu> _menuButtonList = new();
-    private Menu _selectedMenu;
     private StationManager _stationManager;
     private bool _canSelect = true;
+    private Menu _selectedMenu;
+
+    public MenuData CurrentMenu { get; private set; }
     
     private void Awake()
     {
         _cashierStation = GetComponentInParent<CashierStation>();
     }
 
-    private void OnEnable()
-    {
-        Bind();
-    }
+    private void OnEnable() => Bind();
 
-    private void OnDisable()
-    {
-        Unbind();
-    }
+    private void OnDisable() => Unbind();
 
     private void Start()
     {
@@ -48,6 +44,8 @@ public class MenuSelector : MonoBehaviour
         InitializeMenus();
         SetCanvasContent(false);
     }
+
+    #region Events
 
     private void Bind()
     {
@@ -84,6 +82,8 @@ public class MenuSelector : MonoBehaviour
         }
 
     }
+
+    #endregion
     
     #region Canvas Manipulation
 
@@ -148,7 +148,9 @@ public class MenuSelector : MonoBehaviour
     
     private void HandleOrderUp()
     {
-        if (!_selectedMenu || _selectedMenu.menuData != _customer.MenuData)
+        if (!_selectedMenu || !_customer || _selectedMenu.menuData == null ||
+            _customer.MenuSource == null ||
+            _selectedMenu.menuData != _customer.MenuSource)
         {
             _canSelect = false;
             orderUpButton.interactable = _canSelect;
@@ -162,10 +164,15 @@ public class MenuSelector : MonoBehaviour
                 });
             return;
         }
+
+        if (!CurrentMenu || CurrentMenu != _selectedMenu.menuData)
+        {
+            CurrentMenu = Instantiate(_selectedMenu.menuData);
+        }
         
         if (!_stationManager) return;
         SetPanelMenu(false);
-        _stationManager.GoToStation(_cashierStation.StationId, _stationManager.PrepStation.StationId);
+        _stationManager.GoToStation(_cashierStation.StationId, _stationManager.GetStation<PrepStation>()?.StationId ?? 0);
     }
 
     public void SetPanelMenu(bool show)

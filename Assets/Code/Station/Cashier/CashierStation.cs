@@ -9,7 +9,13 @@ public class CashierStation : MonoBehaviour, IStation
     [field: SerializeField] public int StationId { get; private set; }
 
     private CustomerManager _customerManager;
+    private MenuSelector _selector;
+    
     public Customer Customer { get; private set; }
+    public MenuData CurrentMenu =>
+        _selector != null && _selector.CurrentMenu
+            ? _selector.CurrentMenu
+            : null;
 
     public Action OnNewCustomerEnter;
 
@@ -23,13 +29,14 @@ public class CashierStation : MonoBehaviour, IStation
         Instance = this;
         
         Customer = GetComponentInChildren<Customer>();
+        _selector = GetComponentInChildren<MenuSelector>();
     }
 
     private void OnEnable()
     {
         if (Customer) Customer.OnCustomerOutOfPatience += OnCustomerOutOfPatience;
     }
-    
+
     private void OnDisable()
     {
         if (Customer) Customer.OnCustomerOutOfPatience -= OnCustomerOutOfPatience;
@@ -40,6 +47,20 @@ public class CashierStation : MonoBehaviour, IStation
         _customerManager = CustomerManager.Instance;
         SummonCustomer();
     }
+
+    #region Station Manipulation
+
+    public void OnOpen()
+    {
+        
+    }
+
+    public void OnClose()
+    {
+        
+    }
+
+    #endregion
 
     [ContextMenu("Summon Customer"), Button(enabledMode: EButtonEnableMode.Playmode)]
     public void SummonCustomer()
@@ -53,10 +74,5 @@ public class CashierStation : MonoBehaviour, IStation
     private void OnCustomerOutOfPatience()
     {
         print($"Customer is out of Patience: {Customer.CustomerData}");
-    }
-
-    public void OpenStation()
-    {
-        
     }
 }

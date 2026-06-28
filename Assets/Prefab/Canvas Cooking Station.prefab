@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 7056818677729487943}
   - component: {fileID: 1184264458714992980}
   - component: {fileID: 7737569146175623947}
-  - component: {fileID: 5700551335687427370}
+  - component: {fileID: 6480843377080598564}
   m_Layer: 5
   m_Name: Canvas Cooking Station
   m_TagString: Untagged
@@ -274,7 +274,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &5700551335687427370
+--- !u!114 &6480843377080598564
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -283,10 +283,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2603025266578658768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfac1f80eded7d147b72d53311f5f0fc, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b2ae9849ddf4aa4ac96c70ac724d58c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <StationId>k__BackingField: 1
+  <StationId>k__BackingField: 2
 --- !u!1 &2742913641945409702
 GameObject:
   m_ObjectHideFlags: 0

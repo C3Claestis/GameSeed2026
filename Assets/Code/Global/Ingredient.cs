@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ingredient : ScriptableObject
 {
     public string recipeName;
+    public Sprite sprite;
 
     #if UNITY_EDITOR
     [ContextMenu("Fill Name"), Button("Fill Name")]
