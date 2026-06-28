@@ -9,6 +9,8 @@ public class PrepStation : MonoBehaviour, IStation
     private PrepSelector _selector;
     private ChopSystem _chop;
 
+    public ChopSystem ChopSystem => _chop;
+    
     private void Awake()
     {
         _selector = GetComponentInChildren<PrepSelector>();
@@ -63,6 +65,11 @@ public class PrepStation : MonoBehaviour, IStation
         var menu = _cashier.CurrentMenu;
         if (menu == null) return;
 
+        UpdateSelector(menu);
+    }
+
+    private void UpdateSelector(MenuData menu)
+    {
         _selector.Initialize(menu);
     }
 

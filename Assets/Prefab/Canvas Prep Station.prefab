@@ -2975,9 +2975,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7548613001544073352}
+      - m_Target: {fileID: 2361250168691517182}
         m_TargetAssemblyTypeName: Chopper, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: TryChop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
