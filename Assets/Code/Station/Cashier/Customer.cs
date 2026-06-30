@@ -10,7 +10,7 @@ public class Customer : MonoBehaviour
 
     private float _patience;
     private Image _image;
-    private TMP_Text _text;
+    private Text _text;
     private Sequence _fadeSequence;
     private Tweener _patienceTween;
 
@@ -31,7 +31,7 @@ public class Customer : MonoBehaviour
             _image.preserveAspect = true;
             _image.color = new Color(255, 255, 255, 0);
         }
-        _text = transform.parent?.GetComponentInChildren<TMP_Text>();
+        _text = transform.parent?.GetComponentInChildren<Text>();
     }
 
     private void Enter()

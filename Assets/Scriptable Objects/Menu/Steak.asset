@@ -30,13 +30,17 @@ MonoBehaviour:
       type: {class: RTCutIngredient, ns: , asm: Assembly-CSharp}
       data:
         completed: 0
-        description: Cut meats into 3 sllices
-        ingredient: {fileID: 11400000, guid: 19c3055117efd3f4a9cc86877178bc5c, type: 2}
+        description: Chop garlic
+        ingredient: {fileID: 11400000, guid: 1ccd6cb8923bf6b4a8041eb4e05a14f0, type: 2}
         cutSteps:
-        - knifePosition: {x: 135, y: 0}
-          sprite: {fileID: 21300000, guid: 2a07c642a011db94e8535ffd8663d730, type: 3}
+        - knifePosition: {x: 170, y: -110}
+          sprite: {fileID: 21300000, guid: 346146966a3ed9d44a982021d149ce6a, type: 3}
           completed: 0
-        - knifePosition: {x: -135, y: 0}
-          sprite: {fileID: 21300000, guid: ac6141c090987d5409831b31371a56d6, type: 3}
+        - knifePosition: {x: 170, y: -110}
+          sprite: {fileID: 21300000, guid: b0a0b113ef08fc746b2c9b58edaf6e6e, type: 3}
           completed: 0
-        resultSprite: {fileID: 21300000, guid: 4bd80cb7ac9bad94ba331f9783090692, type: 3}
+        - knifePosition: {x: 170, y: -300}
+          sprite: {fileID: 21300000, guid: 7a572a5d7e430e24d821b787167cecae, type: 3}
+          completed: 0
+        resultSprite: {fileID: 21300000, guid: 7a572a5d7e430e24d821b787167cecae, type: 3}
+        knifeType: 1

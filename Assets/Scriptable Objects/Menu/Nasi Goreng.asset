@@ -17,6 +17,8 @@ MonoBehaviour:
   recipesTask:
   - rid: 4277192093133438976
   - rid: 5782712768372670464
+  - rid: 5782712772329996289
+  - rid: 5782712772329996292
   references:
     version: 2
     RefIds:
@@ -30,7 +32,7 @@ MonoBehaviour:
       type: {class: RTCutIngredient, ns: , asm: Assembly-CSharp}
       data:
         completed: 0
-        description: Cut chicken meat into 3 sllices
+        description: Chop chicken into 6 sllices
         ingredient: {fileID: 11400000, guid: 9ef423218bcf58c4494cbc75523b9b0e, type: 2}
         cutSteps:
         - knifePosition: {x: 512, y: -110}
@@ -51,4 +53,56 @@ MonoBehaviour:
         - knifePosition: {x: -310, y: -110}
           sprite: {fileID: 21300000, guid: 01ef26703d654f84cb1e416f54c1fccc, type: 3}
           completed: 0
+        - knifePosition: {x: -500, y: -110}
+          sprite: {fileID: 21300000, guid: d821822fa086a164f9676d917174b0ec, type: 3}
+          completed: 0
         resultSprite: {fileID: 21300000, guid: d821822fa086a164f9676d917174b0ec, type: 3}
+        knifeType: 0
+    - rid: 5782712772329996289
+      type: {class: RTCutIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        description: Chop leek into 6 sllices
+        ingredient: {fileID: 11400000, guid: 2ad366cdca6774b48a0e322d6f464388, type: 2}
+        cutSteps:
+        - knifePosition: {x: 500, y: -110}
+          sprite: {fileID: 21300000, guid: 5d52bcb57fdb5a04ab5005611f442229, type: 3}
+          completed: 0
+        - knifePosition: {x: 350, y: -110}
+          sprite: {fileID: 21300000, guid: f84b7fcc484f339409f36974a63df18a, type: 3}
+          completed: 0
+        - knifePosition: {x: 175, y: -110}
+          sprite: {fileID: 21300000, guid: 953dac6535dcbcc469cdf57d1446b1b0, type: 3}
+          completed: 0
+        - knifePosition: {x: 15, y: -110}
+          sprite: {fileID: 21300000, guid: 55217355aa3790d48835ea47cf0b2bc5, type: 3}
+          completed: 0
+        - knifePosition: {x: -150, y: -110}
+          sprite: {fileID: 21300000, guid: 206170b9201557d4b960245421c9bb18, type: 3}
+          completed: 0
+        - knifePosition: {x: -325, y: -110}
+          sprite: {fileID: 21300000, guid: 5f95acc802b264d4391697faceb8386d, type: 3}
+          completed: 0
+        - knifePosition: {x: -500, y: -110}
+          sprite: {fileID: 21300000, guid: 5a2c411aa668e904ba601ac51f420b93, type: 3}
+          completed: 0
+        resultSprite: {fileID: 21300000, guid: 5a2c411aa668e904ba601ac51f420b93, type: 3}
+        knifeType: 0
+    - rid: 5782712772329996292
+      type: {class: RTCutIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        description: Chop garlic
+        ingredient: {fileID: 11400000, guid: 1ccd6cb8923bf6b4a8041eb4e05a14f0, type: 2}
+        cutSteps:
+        - knifePosition: {x: 170, y: -110}
+          sprite: {fileID: 21300000, guid: 346146966a3ed9d44a982021d149ce6a, type: 3}
+          completed: 0
+        - knifePosition: {x: 170, y: -110}
+          sprite: {fileID: 21300000, guid: b0a0b113ef08fc746b2c9b58edaf6e6e, type: 3}
+          completed: 0
+        - knifePosition: {x: 170, y: -300}
+          sprite: {fileID: 21300000, guid: 7a572a5d7e430e24d821b787167cecae, type: 3}
+          completed: 0
+        resultSprite: {fileID: 21300000, guid: 7a572a5d7e430e24d821b787167cecae, type: 3}
+        knifeType: 1

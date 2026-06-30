@@ -165,6 +165,7 @@ public class MenuSelector : MonoBehaviour
             if (i >= _menuManager.MenuData.Count)
                 continue;            
 
+            //Tambahan Jafar
             // Aktifkan hanya indikator menu yang dipilih
             if (menuButtons[i].transform.childCount > 1)
             {

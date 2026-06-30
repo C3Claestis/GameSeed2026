@@ -5,7 +5,9 @@ using UnityEngine.UI;
 public class ChopSystem : MonoBehaviour
 {
     [SerializeField] private GameObject ingredientPrefab;
+    [SerializeField] private GameObject ingredientPrefabGarlic;
     [SerializeField] private GameObject knifePrefab;
+    [SerializeField] private GameObject knifePrefabGarlic;
     [SerializeField] private CanvasGroup prepCanvas;
     [SerializeField] private CanvasGroup choppingCanvas;
     [SerializeField] private Transform cuttingBoard;
@@ -14,7 +16,7 @@ public class ChopSystem : MonoBehaviour
     private Image _target;
     private Button _knife;
 
-    public RTCutIngredient Cut {get; private set;}
+    public RTCutIngredient Cut { get; private set; }
 
     private void Start()
     {
@@ -48,10 +50,30 @@ public class ChopSystem : MonoBehaviour
         }
 
         if (menu == null) return;
-        
-        var targetGo = Instantiate(ingredientPrefab, cuttingBoard);
+
+        //Tambahan Jafar
+        GameObject ingredientToSpawn;
+        GameObject knifeToSpawn;
+
+        switch (menu.knifeType)
+        {
+            case RTCutIngredient.KnifeType.Garlic:
+                ingredientToSpawn = ingredientPrefabGarlic;
+                knifeToSpawn = knifePrefabGarlic;
+                break;
+
+            default:
+                ingredientToSpawn = ingredientPrefab;
+                knifeToSpawn = knifePrefab;
+                break;
+        }
+
+        var targetGo = Instantiate(ingredientToSpawn, cuttingBoard);
         _target = targetGo.GetComponent<Image>();
-        _knife = Instantiate(knifePrefab, targetGo.transform).GetComponent<Button>();
+
+        _knife = Instantiate(knifeToSpawn, targetGo.transform).GetComponent<Button>();
+        //Tambahan Jafar
+
         _target.sprite = menu.cutSteps[0]?.sprite;
         Cut = menu;
         var knifePos = new Vector3(Cut.cutSteps[0]?.knifePosition.x ?? 0, -110, Cut.cutSteps[0]?.knifePosition.y ?? 0);
@@ -74,8 +96,8 @@ public class ChopSystem : MonoBehaviour
 
             if (i < steps.Count - 1)
             {
-                if (_target) _target.sprite = steps[i+1]?.sprite;
-                if (_knife) _knife.transform.localPosition = steps[i+1]?.knifePosition ?? Vector3.zero;
+                if (_target) _target.sprite = steps[i + 1]?.sprite;
+                if (_knife) _knife.transform.localPosition = steps[i + 1]?.knifePosition ?? Vector3.zero;
             }
             else
             {
@@ -86,7 +108,7 @@ public class ChopSystem : MonoBehaviour
             stepComplete++;
             break;
         }
-        
+
         if (stepComplete == Cut.cutSteps.Count)
         {
             Cut.completed = true;

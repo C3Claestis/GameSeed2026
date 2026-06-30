@@ -289,7 +289,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredientPrefab: {fileID: 8133026712499582794, guid: 08459808a351ab04e8546fb7edccfe7e, type: 3}
+  ingredientPrefabGarlic: {fileID: 8133026712499582794, guid: 43f9b87face6c21408f113ad9a25fc0e, type: 3}
   knifePrefab: {fileID: 3178018981047037246, guid: 603db3f0eb2e37d4885bdce9c12f15f7, type: 3}
+  knifePrefabGarlic: {fileID: 3178018981047037246, guid: 626ddfec5276851499f6bed2ecf9b329, type: 3}
   prepCanvas: {fileID: 4151594191098103134}
   choppingCanvas: {fileID: 5739168621114659584}
   cuttingBoard: {fileID: 2505688204321967520}
@@ -1085,7 +1087,7 @@ GameObject:
   - component: {fileID: 1073161596262617940}
   - component: {fileID: 3001181794749080726}
   - component: {fileID: 6141330417490891577}
-  - component: {fileID: 1232606764003499530}
+  - component: {fileID: 109114590786314083}
   m_Layer: 5
   m_Name: Button Chop Garlic
   m_TagString: Untagged
@@ -1194,9 +1196,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1232606764003499530}
-        m_TargetAssemblyTypeName: IngredientHolder, Assembly-CSharp
-        m_MethodName: SubmitIngredient
+      - m_Target: {fileID: 109114590786314083}
+        m_TargetAssemblyTypeName: Chopper, Assembly-CSharp
+        m_MethodName: TryChop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1206,7 +1208,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1232606764003499530
+--- !u!114 &109114590786314083
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1215,7 +1217,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5578583854246621803}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 107d6ac6f9e348b4a8e5e492b8ab5243, type: 3}
+  m_Script: {fileID: 11500000, guid: 6adb3cebd59880c44a5916468adc60c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ingredient: {fileID: 11400000, guid: 1ccd6cb8923bf6b4a8041eb4e05a14f0, type: 2}

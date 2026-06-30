@@ -4,19 +4,39 @@ using UnityEngine;
 public class CookingStation : MonoBehaviour, IStation
 {
     [field: SerializeField] public int StationId { get; private set; }
-
-    private CashierStation _cashier;
     
+    private CashierStation _cashier;
+    private CookingSelector _selector;
+    private ChopSystem _chop;
+
+    public ChopSystem ChopSystem => _chop;
+    
+    private void Awake()
+    {
+        _selector = GetComponentInChildren<CookingSelector>();
+        _chop = GetComponentInChildren<ChopSystem>();
+    }
+
+    private void OnEnable()
+    {
+        
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
     private void Start()
     {
         _cashier = StationManager.Instance?.GetStation<CashierStation>();
     }
-
+    
     #region Station Manipulation
 
     public void OnOpen()
     {
-        
+        PrepareRecipe();
     }
 
     public void OnClose()
@@ -25,4 +45,38 @@ public class CookingStation : MonoBehaviour, IStation
     }
 
     #endregion
+    
+    private void PrepareRecipe()
+    {
+        _chop?.SetCanvas(false);
+
+        if (!_selector || !_cashier) return;
+
+        var menu = _cashier.CurrentMenu;
+        if (menu == null) return;
+
+        _selector.Initialize(menu);
+    }
+
+    public void UpdatePrep()
+    {
+        if (!_selector || !_cashier) return;
+
+        var menu = _cashier.CurrentMenu;
+        if (menu == null) return;
+
+        UpdateSelector(menu);
+    }
+
+    private void UpdateSelector(MenuData menu)
+    {
+        _selector.Initialize(menu);
+    }
+
+    public void Chop(RTCutIngredient menu)
+    {
+        if (!_chop) return;
+        _chop.SetCanvas(true);
+        _chop.Initialize(menu);
+    }
 }
