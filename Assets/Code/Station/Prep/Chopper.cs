@@ -17,19 +17,34 @@ public class Chopper : MonoBehaviour
 
     public void TryChop()
     {
-        print($"Try chop {ingredient}");
         if (!_cashier || !ingredient) return;
         var menu = _cashier.CurrentMenu;
         if (!menu || menu.recipesTask.Length <= 0) return;
         foreach (var task in menu.recipesTask)
         {
-            print($"Apakah sama: {ingredient.recipeName} | {(task as RTCutIngredient)?.ingredient?.recipeName} | {(task as RTCutIngredient)?.ingredient?.recipeName != ingredient.recipeName}");
             if (task is not RTCutIngredient { completed: false } cut || cut.ingredient?.recipeName != ingredient.recipeName)
             {
                 continue;
             }
-            _prep.Chop(cut);
-            break;
+
+            if (IngredientReady(ingredient, menu.recipesTask))
+            {
+                _prep.Chop(cut);
+                break;
+            }
         }
+    }
+
+    private bool IngredientReady(Ingredient target, RecipeTask[] tasks)
+    {
+        if (tasks == null || tasks.Length <= 0) return false;
+        var i = 0;
+        foreach (var task in tasks)
+        {
+            if (task is RTGetIngredient prepped && prepped.ingredient == target) return prepped.completed;
+            i++;
+        }
+        
+        return i == tasks.Length;
     }
 }
