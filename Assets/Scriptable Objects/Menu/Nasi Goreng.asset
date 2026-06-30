@@ -95,14 +95,26 @@ MonoBehaviour:
         description: Chop garlic
         ingredient: {fileID: 11400000, guid: 1ccd6cb8923bf6b4a8041eb4e05a14f0, type: 2}
         cutSteps:
-        - knifePosition: {x: 170, y: -110}
+        - knifePosition: {x: 185, y: -110}
           sprite: {fileID: 21300000, guid: 346146966a3ed9d44a982021d149ce6a, type: 3}
           completed: 0
-        - knifePosition: {x: 170, y: -110}
-          sprite: {fileID: 21300000, guid: b0a0b113ef08fc746b2c9b58edaf6e6e, type: 3}
+        - knifePosition: {x: 120, y: -110}
+          sprite: {fileID: 21300000, guid: a8caf94a27bed5648a4611aa0ccb09de, type: 3}
           completed: 0
-        - knifePosition: {x: 170, y: -300}
-          sprite: {fileID: 21300000, guid: 7a572a5d7e430e24d821b787167cecae, type: 3}
+        - knifePosition: {x: 42, y: -110}
+          sprite: {fileID: 21300000, guid: bab1cc61c847e8c418f867bea8f120e7, type: 3}
           completed: 0
-        resultSprite: {fileID: 21300000, guid: 7a572a5d7e430e24d821b787167cecae, type: 3}
+        - knifePosition: {x: -26, y: -110}
+          sprite: {fileID: 21300000, guid: e95881dd66c89db49b4c64b06f7127ae, type: 3}
+          completed: 0
+        - knifePosition: {x: -85, y: -110}
+          sprite: {fileID: 21300000, guid: d3f9f8dee21d2484e946c4fa2e4eb5ed, type: 3}
+          completed: 0
+        - knifePosition: {x: -160, y: -110}
+          sprite: {fileID: 21300000, guid: 19ea355b3338d6843a965c8b852b519a, type: 3}
+          completed: 0
+        - knifePosition: {x: -500, y: -110}
+          sprite: {fileID: 21300000, guid: 0e9effe677c0d194a926cda792cdaa56, type: 3}
+          completed: 0
+        resultSprite: {fileID: 21300000, guid: 0e9effe677c0d194a926cda792cdaa56, type: 3}
         knifeType: 1

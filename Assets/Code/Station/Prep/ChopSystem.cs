@@ -6,8 +6,7 @@ public class ChopSystem : MonoBehaviour
 {
     [SerializeField] private GameObject ingredientPrefab;
     [SerializeField] private GameObject ingredientPrefabGarlic;
-    [SerializeField] private GameObject knifePrefab;
-    [SerializeField] private GameObject knifePrefabGarlic;
+    [SerializeField] private GameObject knifePrefab;    
     [SerializeField] private CanvasGroup prepCanvas;
     [SerializeField] private CanvasGroup choppingCanvas;
     [SerializeField] private Transform cuttingBoard;
@@ -52,26 +51,23 @@ public class ChopSystem : MonoBehaviour
         if (menu == null) return;
 
         //Tambahan Jafar
-        GameObject ingredientToSpawn;
-        GameObject knifeToSpawn;
+        GameObject ingredientToSpawn;        
 
         switch (menu.knifeType)
         {
             case RTCutIngredient.KnifeType.Garlic:
-                ingredientToSpawn = ingredientPrefabGarlic;
-                knifeToSpawn = knifePrefabGarlic;
+                ingredientToSpawn = ingredientPrefabGarlic;                
                 break;
 
             default:
-                ingredientToSpawn = ingredientPrefab;
-                knifeToSpawn = knifePrefab;
+                ingredientToSpawn = ingredientPrefab;                
                 break;
         }
 
         var targetGo = Instantiate(ingredientToSpawn, cuttingBoard);
         _target = targetGo.GetComponent<Image>();
 
-        _knife = Instantiate(knifeToSpawn, targetGo.transform).GetComponent<Button>();
+        _knife = Instantiate(knifePrefab, targetGo.transform).GetComponent<Button>();
         //Tambahan Jafar
 
         _target.sprite = menu.cutSteps[0]?.sprite;
