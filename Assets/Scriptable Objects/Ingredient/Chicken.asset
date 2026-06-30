@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40c218d25c4941868abdabc2275d6f22, type: 3}
-  m_Name: Rice
+  m_Name: Chicken
   m_EditorClassIdentifier: 
-  recipeName: Rice
+  recipeName: Chicken
   sprite: {fileID: 0}

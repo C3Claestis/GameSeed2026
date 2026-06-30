@@ -13,8 +13,8 @@ public class MenuSelector : MonoBehaviour
     [SerializeField] private Button menuOpenerButton;
 
     [Header("Menu Buttons")]
-    [SerializeField] private Button[] menuButtons;     // Isi 3 Button
-    [SerializeField] private Text[] menuTexts;     // Isi 3 TMP_Text
+    [SerializeField] private Button[] menuButtons;
+    [SerializeField] private Text[] menuTexts;
 
     private CashierStation _cashierStation;
     private Customer _customer;
@@ -128,16 +128,17 @@ public class MenuSelector : MonoBehaviour
             var data = _menuManager.MenuData[i];
 
             menuButtons[i].gameObject.SetActive(true);
-
-            // Ganti MenuName sesuai field pada MenuData milikmu
             menuTexts[i].text = data.menuName;
+            menuTexts[i].color = Color.black;
+
+            // Matikan indikator (child ke-2)
+            if (menuButtons[i].transform.childCount > 1)
+                menuButtons[i].transform.GetChild(1).gameObject.SetActive(false);
 
             int index = i;
 
             menuButtons[i].onClick.RemoveAllListeners();
             menuButtons[i].onClick.AddListener(() => HandleMenuButtonClicked(index));
-
-            menuTexts[i].color = Color.black;
         }
     }
 
@@ -154,20 +155,25 @@ public class MenuSelector : MonoBehaviour
         if (orderUpButton)
             orderUpButton.interactable = _selectedMenu != null && _canSelect;
 
-        RefreshButtonColors();
+        RefreshButtonIndicators();
     }
 
-    private void RefreshButtonColors()
+    private void RefreshButtonIndicators()
     {
-        for (int i = 0; i < menuTexts.Length; i++)
+        for (int i = 0; i < menuButtons.Length; i++)
         {
             if (i >= _menuManager.MenuData.Count)
-                continue;
+                continue;            
 
-            menuTexts[i].color =
-                _selectedMenu == _menuManager.MenuData[i]
-                ? Color.green
-                : Color.black;
+            // Aktifkan hanya indikator menu yang dipilih
+            if (menuButtons[i].transform.childCount > 1)
+            {
+                menuButtons[i]
+                    .transform
+                    .GetChild(1)
+                    .gameObject
+                    .SetActive(_selectedMenu == _menuManager.MenuData[i]);
+            }
         }
     }
 

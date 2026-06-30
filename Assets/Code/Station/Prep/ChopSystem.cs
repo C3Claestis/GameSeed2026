@@ -54,7 +54,7 @@ public class ChopSystem : MonoBehaviour
         _knife = Instantiate(knifePrefab, targetGo.transform).GetComponent<Button>();
         _target.sprite = menu.cutSteps[0]?.sprite;
         Cut = menu;
-        var knifePos = new Vector3(Cut.cutSteps[0]?.knifePosition.x ?? 0, 0, Cut.cutSteps[0]?.knifePosition.y ?? 0);
+        var knifePos = new Vector3(Cut.cutSteps[0]?.knifePosition.x ?? 0, -110, Cut.cutSteps[0]?.knifePosition.y ?? 0);
         _knife.transform.localPosition = knifePos;
     }
 

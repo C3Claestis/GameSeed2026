@@ -22,7 +22,8 @@ public class MenuManager : MonoBehaviour
     public MenuData GetRandomMenu()
     {
         if (menuData.Count == 0) return null;
-        var index = Random.Range(0, menuData.Count);
+        var index = Random.Range(2, 2);//menuData.Count);
         return menuData[index];
     }
 }
+

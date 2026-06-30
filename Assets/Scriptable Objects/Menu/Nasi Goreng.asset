@@ -16,6 +16,7 @@ MonoBehaviour:
   menuSprite: {fileID: 0}
   recipesTask:
   - rid: 4277192093133438976
+  - rid: 5782712768372670464
   references:
     version: 2
     RefIds:
@@ -25,3 +26,29 @@ MonoBehaviour:
         completed: 0
         description: Get Rice
         ingredient: {fileID: 11400000, guid: 6bb6905b8f610a8419f6ecf8d45922d7, type: 2}
+    - rid: 5782712768372670464
+      type: {class: RTCutIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        description: Cut chicken meat into 3 sllices
+        ingredient: {fileID: 11400000, guid: 9ef423218bcf58c4494cbc75523b9b0e, type: 2}
+        cutSteps:
+        - knifePosition: {x: 512, y: -110}
+          sprite: {fileID: 21300000, guid: 98d8515bf5f52364391977d00d3d714a, type: 3}
+          completed: 0
+        - knifePosition: {x: 352, y: -110}
+          sprite: {fileID: 21300000, guid: d1ea556f6d458394fbfc07c4c5f8f1fc, type: 3}
+          completed: 0
+        - knifePosition: {x: 200, y: -110}
+          sprite: {fileID: 21300000, guid: c1d63e38ded9ef642a75099eff10332b, type: 3}
+          completed: 0
+        - knifePosition: {x: 16, y: -110}
+          sprite: {fileID: 21300000, guid: 8e48530d6b3b4704d8692f84b1a01487, type: 3}
+          completed: 0
+        - knifePosition: {x: -131, y: -110}
+          sprite: {fileID: 21300000, guid: 5d01109ae54b8ed4e9b9211e974ab21b, type: 3}
+          completed: 0
+        - knifePosition: {x: -310, y: -110}
+          sprite: {fileID: 21300000, guid: 01ef26703d654f84cb1e416f54c1fccc, type: 3}
+          completed: 0
+        resultSprite: {fileID: 21300000, guid: d821822fa086a164f9676d917174b0ec, type: 3}

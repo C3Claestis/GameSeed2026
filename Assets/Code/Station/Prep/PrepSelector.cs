@@ -1,16 +1,15 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PrepSelector : MonoBehaviour
 {
-    [SerializeField] private TMP_Text menuName;
+    [SerializeField] private Text menuName;
     [SerializeField] private Transform taskContainer;
     [SerializeField] private GameObject taskPrefab;
     [SerializeField] private Button doneButton;
 
     private StationManager _stationManager;
-    
+
     private void Start()
     {
         _stationManager = StationManager.Instance;
@@ -48,9 +47,14 @@ public class PrepSelector : MonoBehaviour
         {
             var scratch = Instantiate(taskPrefab, taskContainer ?? transform);
             var image = scratch.GetComponentInChildren<Image>();
-            var text = scratch.GetComponentInChildren<TMP_Text>();
+            var text = scratch.GetComponentInChildren<Text>();
             if (text) text.text = task.description;
-            if (image) image.color = task.completed ? Color.green : Color.red;
+            if (image)
+            {
+                Color color = image.color;
+                color.a = task.completed ? 1f : 25f / 255f;
+                image.color = color;
+            }
         }
     }
 
