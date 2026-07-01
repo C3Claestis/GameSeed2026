@@ -1,14 +1,25 @@
 using System;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class OrderManager : MonoBehaviour
 {
     public static OrderManager Instance;
 
-    private readonly Queue<MenuData> waitingOrders = new();
+    [ReadOnly] private List<CustomerOrder> orders = new();
 
-    public event Action OnQueueChanged;
+    public IReadOnlyList<CustomerOrder> Orders => orders;
+    public CustomerOrder ActiveOrder { get; private set; }
+
+    [ShowNativeProperty]
+    private string ActiveOrderDebug =>
+        ActiveOrder != null
+            ? $"{ActiveOrder.Customer?.customerName} -> {ActiveOrder.Menu?.menuName}"
+            : "(none)";
+
+    public event Action OnOrdersChanged;
+    public event Action<CustomerOrder> OnActiveOrderChanged;
 
     private void Awake()
     {
@@ -21,48 +32,49 @@ public class OrderManager : MonoBehaviour
         Instance = this;
     }
 
-    /// <summary>
-    /// Tambahkan menu baru ke antrean.
-    /// </summary>
-    public void AddOrder(MenuData menu)
+    public CustomerOrder AddOrder(CustomerData customer, MenuData menuTemplate)
     {
-        if (menu == null)
-            return;
-
-        // Instantiate agar progress task tiap order tidak saling berbagi
-        waitingOrders.Enqueue(Instantiate(menu));
-
-        OnQueueChanged?.Invoke();
-    }
-
-    /// <summary>
-    /// Melihat menu pertama tanpa menghapus.
-    /// </summary>
-    public MenuData GetCurrentOrder()
-    {
-        return waitingOrders.Count > 0
-            ? waitingOrders.Peek()
-            : null;
-    }
-
-    /// <summary>
-    /// Menghapus menu pertama setelah selesai.
-    /// </summary>
-    public MenuData CompleteCurrentOrder()
-    {
-        if (waitingOrders.Count == 0)
+        if (!menuTemplate)
             return null;
 
-        MenuData menu = waitingOrders.Dequeue();
+        var order = new CustomerOrder(customer, Instantiate(menuTemplate));
+        orders.Add(order);
 
-        OnQueueChanged?.Invoke();
+        OnOrdersChanged?.Invoke();
+        SetActiveOrder(order);
 
-        return menu;
+        return order;
     }
 
-    public bool HasOrder => waitingOrders.Count > 0;
+    public void SetActiveOrder(CustomerOrder order)
+    {
+        if (order != null && !orders.Contains(order))
+            return;
 
-    public int Count => waitingOrders.Count;
+        ActiveOrder = order;
+        OnActiveOrderChanged?.Invoke(order);
+    }
 
-    public IReadOnlyCollection<MenuData> Orders => waitingOrders;
+    public void RemoveOrder(CustomerOrder order)
+    {
+        if (order == null || !orders.Remove(order))
+            return;
+
+        OnOrdersChanged?.Invoke();
+
+        if (ActiveOrder == order)
+        {
+            SetActiveOrder(orders.Count > 0 ? orders[0] : null);
+        }
+    }
+
+    [ContextMenu("Cycle Active Order"), Button("Cycle Active Order", enabledMode: EButtonEnableMode.Playmode)]
+    private void CycleActiveOrder()
+    {
+        if (orders.Count == 0) return;
+
+        var index = ActiveOrder != null ? orders.IndexOf(ActiveOrder) : -1;
+        var next = orders[(index + 1) % orders.Count];
+        SetActiveOrder(next);
+    }
 }

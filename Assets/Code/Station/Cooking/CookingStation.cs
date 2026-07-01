@@ -22,12 +22,16 @@ public class CookingStation : MonoBehaviour, IStation
 
     private void OnDisable()
     {
-
+        if (OrderManager.Instance != null)
+            OrderManager.Instance.OnActiveOrderChanged -= HandleActiveOrderChanged;
     }
 
     private void Start()
     {
         _cashier = StationManager.Instance?.GetStation<CashierStation>();
+
+        if (OrderManager.Instance != null)
+            OrderManager.Instance.OnActiveOrderChanged += HandleActiveOrderChanged;
     }
 
     #region Station Manipulation
@@ -44,37 +48,47 @@ public class CookingStation : MonoBehaviour, IStation
 
     #endregion
 
+    private void HandleActiveOrderChanged(CustomerOrder order)
+    {
+        if (!StationManager.Instance || StationManager.Instance.ActiveStation != StationId) return;
+
+        PrepareRecipe();
+    }
+
     private void PrepareRecipe()
     {
-        if (!_selector || !_cashier) return;
+        if (!_selector) return;
 
-        var menu = _cashier.CurrentMenu;
-        if (menu == null || menu.CookTask == null || menu.CookTask.Length == 0)
-            return;
+        var menu = _cashier ? _cashier.CurrentMenu : null;
 
-        // Cek apakah semua recipesTask sudah selesai
-        foreach (var task in menu.recipesTask)
+        if (!IsReadyToCook(menu))
         {
-            if (!task.completed)
-                return;
+            indicatorCooking?.StopIndicator();
+            _selector.Initialize(null);
+            return;
         }
 
         indicatorCooking?.StartIndicator();
         _selector.Initialize(menu);
     }
 
-    public void UpdatePrep()
+    private static bool IsReadyToCook(MenuData menu)
     {
-        if (!_selector || !_cashier) return;
+        if (menu == null || menu.CookTask == null || menu.CookTask.Length == 0)
+            return false;
 
-        var menu = _cashier.CurrentMenu;
-        if (menu == null) return;
+        // Cek apakah semua recipesTask sudah selesai
+        foreach (var task in menu.recipesTask)
+        {
+            if (!task.completed)
+                return false;
+        }
 
-        UpdateSelector(menu);
+        return true;
     }
 
-    private void UpdateSelector(MenuData menu)
+    public void UpdatePrep()
     {
-        _selector.Initialize(menu);
+        PrepareRecipe();
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class CookingSelector : MonoBehaviour
 
     [Header("Alat Masak")]
     [SerializeField] private GameObject[] alatMasak;
+
+    private readonly List<GameObject> _spawnedObjects = new();
 
     private ObjData objData;
     private StationManager _stationManager;
@@ -72,7 +75,14 @@ public class CookingSelector : MonoBehaviour
 
     private void SetupDoneButton(MenuData data)
     {
-        if (!doneButton || !data) return;
+        if (!doneButton) return;
+
+        if (!data)
+        {
+            doneButton.interactable = false;
+            return;
+        }
+
         var result = 0;
         foreach (var task in data.CookTask)
             if (task is { completed: true }) result++;
@@ -89,7 +99,17 @@ public class CookingSelector : MonoBehaviour
             }
         }
 
-        if (!data) return;
+        if (!data)
+        {
+            ClearSpawnedObjects();
+            UpdateMenuName(string.Empty);
+            if (alatMasak != null)
+            {
+                foreach (var alat in alatMasak)
+                    if (alat) alat.SetActive(false);
+            }
+            return;
+        }
 
         UpdateMenuName(data.menuName);
         SpawnObject(data);
@@ -131,6 +151,8 @@ public class CookingSelector : MonoBehaviour
 
     private void SpawnObject(MenuData data)
     {
+        ClearSpawnedObjects();
+
         ObjData.MenuType menuType;
 
         switch (data.menuName)
@@ -157,8 +179,15 @@ public class CookingSelector : MonoBehaviour
 
         foreach (var spawn in menu.objects)
         {
-            Instantiate(spawn.prefab, spawn.point);
+            _spawnedObjects.Add(Instantiate(spawn.prefab, spawn.point));
         }
+    }
+
+    private void ClearSpawnedObjects()
+    {
+        foreach (var go in _spawnedObjects)
+            if (go) Destroy(go);
+        _spawnedObjects.Clear();
     }
 
     public void UpdateMenuName(string text)
@@ -169,6 +198,11 @@ public class CookingSelector : MonoBehaviour
 
     public void HandleDone()
     {
+        if (doneButton) doneButton.interactable = false;
+
+        var manager = OrderManager.Instance;
+        manager?.RemoveOrder(manager.ActiveOrder);
+
         if (!_stationManager) return;
         _stationManager.GoToStation(_stationManager.ActiveStation,
             _stationManager.GetStation<CookingStation>().StationId);

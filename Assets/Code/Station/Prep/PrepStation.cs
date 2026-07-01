@@ -19,19 +19,23 @@ public class PrepStation : MonoBehaviour, IStation
 
     private void OnEnable()
     {
-        
+
     }
 
     private void OnDisable()
     {
-        
+        if (OrderManager.Instance != null)
+            OrderManager.Instance.OnActiveOrderChanged -= HandleActiveOrderChanged;
     }
 
     private void Start()
     {
         _cashier = StationManager.Instance?.GetStation<CashierStation>();
+
+        if (OrderManager.Instance != null)
+            OrderManager.Instance.OnActiveOrderChanged += HandleActiveOrderChanged;
     }
-    
+
     #region Station Manipulation
 
     public void OnOpen()
@@ -41,35 +45,30 @@ public class PrepStation : MonoBehaviour, IStation
 
     public void OnClose()
     {
-        
+
     }
 
     #endregion
-    
+
+    private void HandleActiveOrderChanged(CustomerOrder order)
+    {
+        if (!StationManager.Instance || StationManager.Instance.ActiveStation != StationId) return;
+
+        UpdatePrep();
+    }
+
     private void PrepareRecipe()
     {
         _chop?.SetCanvas(false);
 
-        if (!_selector || !_cashier) return;
-
-        var menu = _cashier.CurrentMenu;
-        if (menu == null) return;
-
-        _selector.Initialize(menu);
+        UpdatePrep();
     }
 
     public void UpdatePrep()
     {
-        if (!_selector || !_cashier) return;
+        if (!_selector) return;
 
-        var menu = _cashier.CurrentMenu;
-        if (menu == null) return;
-
-        UpdateSelector(menu);
-    }
-
-    private void UpdateSelector(MenuData menu)
-    {
+        var menu = _cashier ? _cashier.CurrentMenu : null;
         _selector.Initialize(menu);
     }
 

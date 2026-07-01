@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customerName: Mifu
   customerSprite: {fileID: 21300000, guid: 2b17753b29ffe3a4cabfdb0ed4378318, type: 3}
-  patience: 5
+  patience: 10

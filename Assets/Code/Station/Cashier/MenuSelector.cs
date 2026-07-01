@@ -24,8 +24,6 @@ public class MenuSelector : MonoBehaviour
     private bool _canSelect = true;
     private MenuData _selectedMenu;
 
-    public MenuData CurrentMenu { get; private set; }
-
     private void Awake()
     {
         _cashierStation = GetComponentInParent<CashierStation>();
@@ -202,12 +200,14 @@ public class MenuSelector : MonoBehaviour
             return;
         }
 
-        if (!CurrentMenu || CurrentMenu != _selectedMenu)
-        {
-            CurrentMenu = Instantiate(_selectedMenu);
-        }
+        OrderManager.Instance?.AddOrder(_customer.CustomerData, _selectedMenu);
+        _selectedMenu = null;
+        if (orderUpButton) orderUpButton.interactable = false;
+        RefreshButtonIndicators();
 
         SetPanelMenu(false);
+
+        _cashierStation.SummonCustomer();
 
         if (_stationManager)
         {

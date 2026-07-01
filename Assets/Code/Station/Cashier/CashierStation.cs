@@ -9,13 +9,9 @@ public class CashierStation : MonoBehaviour, IStation
     [field: SerializeField] public int StationId { get; private set; }
 
     private CustomerManager _customerManager;
-    private MenuSelector _selector;
-    
+
     public Customer Customer { get; private set; }
-    public MenuData CurrentMenu =>
-        _selector != null && _selector.CurrentMenu
-            ? _selector.CurrentMenu
-            : null;
+    public MenuData CurrentMenu => OrderManager.Instance?.ActiveOrder?.Menu;
 
     public Action OnNewCustomerEnter;
 
@@ -29,7 +25,6 @@ public class CashierStation : MonoBehaviour, IStation
         Instance = this;
         
         Customer = GetComponentInChildren<Customer>();
-        _selector = GetComponentInChildren<MenuSelector>();
     }
 
     private void OnEnable()

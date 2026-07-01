@@ -23,7 +23,14 @@ public class PrepSelector : MonoBehaviour
 
     private void SetupDoneButton(MenuData data)
     {
-        if (!doneButton || !data) return;
+        if (!doneButton) return;
+
+        if (!data)
+        {
+            doneButton.interactable = false;
+            return;
+        }
+
         var result = 0;
         foreach (var task in data.recipesTask)
             if (task is { completed: true }) result++;
@@ -40,7 +47,11 @@ public class PrepSelector : MonoBehaviour
             }
         }
         print($"Preping: {data}");
-        if (!data) return;
+        if (!data)
+        {
+            UpdateMenuName(string.Empty);
+            return;
+        }
         UpdateMenuName(data.menuName);
         if (!taskPrefab) return;
         foreach (var task in data.recipesTask)
