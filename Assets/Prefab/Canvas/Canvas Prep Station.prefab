@@ -291,7 +291,6 @@ MonoBehaviour:
   ingredientPrefab: {fileID: 8133026712499582794, guid: 08459808a351ab04e8546fb7edccfe7e, type: 3}
   ingredientPrefabGarlic: {fileID: 8133026712499582794, guid: 43f9b87face6c21408f113ad9a25fc0e, type: 3}
   knifePrefab: {fileID: 3178018981047037246, guid: 603db3f0eb2e37d4885bdce9c12f15f7, type: 3}
-  knifePrefabGarlic: {fileID: 3178018981047037246, guid: 626ddfec5276851499f6bed2ecf9b329, type: 3}
   prepCanvas: {fileID: 4151594191098103134}
   choppingCanvas: {fileID: 5739168621114659584}
   cuttingBoard: {fileID: 2505688204321967520}

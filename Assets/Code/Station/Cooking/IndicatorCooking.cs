@@ -1,53 +1,91 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class IndicatorCooking : MonoBehaviour
 {
+    [Serializable]
+    public class IndicatorRange
+    {
+        public int indicator;
+        [Range(0, 359)] public float minAngle;
+        [Range(0, 359)] public float maxAngle;
+    }
+
     [Header("Needle")]
     [SerializeField] private Transform needle;
-    [SerializeField] private float rotateSpeed = 180f; // derajat per detik
+    [SerializeField] private float rotateSpeed = 180f;
 
-    [Header("Indicator")]
-    [SerializeField] private int indicatorCount = 5;
-
-    public UnityEvent<int> OnIndicatorChanged;
+    [Header("Indicator Ranges")]
+    [SerializeField] private IndicatorRange[] ranges;
 
     private float currentAngle;
-    private int currentIndicator = -1;
+    private bool isRunning;
 
-    public int CurrentIndicator => currentIndicator;
-    public float CurrentAngle => currentAngle;
+    public int CurrentIndicator { get; private set; } = 0;
 
     private void Update()
     {
+        if (!isRunning) return;
+
         RotateNeedle();
         UpdateIndicator();
+        Debug.Log("Current Indicator : " + CurrentIndicator);
+    }
+
+    public void StartIndicator()
+    {
+        currentAngle = 0f;
+        CurrentIndicator = 0;
+        needle.localRotation = Quaternion.identity;
+        isRunning = true;
+    }
+
+    public void StopIndicator()
+    {
+        isRunning = false;
+        currentAngle = 0f;
+        CurrentIndicator = -1;
+        needle.localRotation = Quaternion.identity;
     }
 
     private void RotateNeedle()
     {
-        // Rotate clockwise
         currentAngle += rotateSpeed * Time.deltaTime;
+        currentAngle %= 360f;
 
-        // Kembali ke 0 setelah 360
-        currentAngle = Mathf.Repeat(currentAngle, 360f);
-
-        // Unity positif = CCW, maka negatif agar CW
-        needle.localRotation = Quaternion.Euler(0f, 0f, -currentAngle);
+        needle.localRotation = Quaternion.Euler(0, 0, -currentAngle);
     }
 
     private void UpdateIndicator()
     {
-        float section = 360f / indicatorCount;
-
-        int indicator = Mathf.FloorToInt(currentAngle / section);
-
-        if (indicator != currentIndicator)
+        foreach (var range in ranges)
         {
-            currentIndicator = indicator;
-            OnIndicatorChanged?.Invoke(currentIndicator);
+            bool inRange;
 
-            Debug.Log($"Indicator : {currentIndicator}");
+            if (range.minAngle <= range.maxAngle)
+            {
+                // Range normal, misalnya 90 - 180
+                inRange = currentAngle >= range.minAngle &&
+                          currentAngle < range.maxAngle;
+            }
+            else
+            {
+                // Range melewati 360, misalnya 341 - 72
+                inRange = currentAngle >= range.minAngle ||
+                          currentAngle < range.maxAngle;
+            }
+
+            if (inRange)
+            {
+                if (CurrentIndicator != range.indicator)
+                {
+                    CurrentIndicator = range.indicator;
+                    Debug.Log($"Indicator : {CurrentIndicator}");
+                }
+                return;
+            }
         }
+
+        CurrentIndicator = -1;
     }
 }

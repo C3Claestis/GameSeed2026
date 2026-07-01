@@ -19,9 +19,64 @@ MonoBehaviour:
   - rid: 5782712768372670464
   - rid: 5782712772329996289
   - rid: 5782712772329996292
+  CookTask:
+  - rid: 1194469875601375239
+  - rid: 1194469875601375240
+  - rid: 1194469875601375241
+  - rid: 1194469875601375242
+  - rid: 1194469875601375243
+  - rid: 1194469875601375244
   references:
     version: 2
     RefIds:
+    - rid: 1194469875601375239
+      type: {class: CTGetIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        description: Add Oil
+        ingredient: {fileID: 11400000, guid: 3d01d8a755b528844b26a582c41bf46e, type: 2}
+        indicator: {fileID: 21300000, guid: 202e706c5fcd8b84ba6dcb186c534a01, type: 3}
+        indicatorCook: 0
+    - rid: 1194469875601375240
+      type: {class: CTGetIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        description: Add Garlic
+        ingredient: {fileID: 11400000, guid: 1ccd6cb8923bf6b4a8041eb4e05a14f0, type: 2}
+        indicator: {fileID: 21300000, guid: 9753cf46c172149429d3a1ba2c79b613, type: 3}
+        indicatorCook: 1
+    - rid: 1194469875601375241
+      type: {class: CTGetIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        description: Add Chicken
+        ingredient: {fileID: 11400000, guid: 9ef423218bcf58c4494cbc75523b9b0e, type: 2}
+        indicator: {fileID: 21300000, guid: 9753cf46c172149429d3a1ba2c79b613, type: 3}
+        indicatorCook: 1
+    - rid: 1194469875601375242
+      type: {class: CTGetIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        description: Add Rice
+        ingredient: {fileID: 11400000, guid: 6bb6905b8f610a8419f6ecf8d45922d7, type: 2}
+        indicator: {fileID: 21300000, guid: 70ba8715c65f47b46844f507ecf1f358, type: 3}
+        indicatorCook: 2
+    - rid: 1194469875601375243
+      type: {class: CTGetIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        description: Add Soy Sauce
+        ingredient: {fileID: 11400000, guid: f008e6be6f53cc84194160c9178a0cc1, type: 2}
+        indicator: {fileID: 21300000, guid: 4ba0b5c44b43d0f4b9af5653daec013b, type: 3}
+        indicatorCook: 3
+    - rid: 1194469875601375244
+      type: {class: CTGetIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        description: Add Leek
+        ingredient: {fileID: 11400000, guid: 2ad366cdca6774b48a0e322d6f464388, type: 2}
+        indicator: {fileID: 21300000, guid: cfe6a4059be6eee488a3406836792dea, type: 3}
+        indicatorCook: 4
     - rid: 4277192093133438976
       type: {class: RTGetIngredient, ns: , asm: Assembly-CSharp}
       data:
@@ -50,7 +105,7 @@ MonoBehaviour:
         - knifePosition: {x: -131, y: -110}
           sprite: {fileID: 21300000, guid: 5d01109ae54b8ed4e9b9211e974ab21b, type: 3}
           completed: 0
-        - knifePosition: {x: -310, y: -110}
+        - knifePosition: {x: -260, y: -110}
           sprite: {fileID: 21300000, guid: 01ef26703d654f84cb1e416f54c1fccc, type: 3}
           completed: 0
         - knifePosition: {x: -500, y: -110}

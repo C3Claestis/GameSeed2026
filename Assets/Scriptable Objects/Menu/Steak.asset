@@ -17,9 +17,37 @@ MonoBehaviour:
   recipesTask:
   - rid: 4277192093133438977
   - rid: 4277192106670030848
+  CookTask:
+  - rid: 1194469875601375245
+  - rid: 1194469875601375246
+  - rid: 1194469875601375247
   references:
     version: 2
     RefIds:
+    - rid: 1194469875601375245
+      type: {class: CTGetIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        description: Add Meat
+        ingredient: {fileID: 11400000, guid: 19c3055117efd3f4a9cc86877178bc5c, type: 2}
+        indicator: {fileID: 21300000, guid: 202e706c5fcd8b84ba6dcb186c534a01, type: 3}
+        indicatorCook: 0
+    - rid: 1194469875601375246
+      type: {class: CTGetIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        description: Add Butter
+        ingredient: {fileID: 11400000, guid: 467182820c5d55d469574ed8de37a836, type: 2}
+        indicator: {fileID: 21300000, guid: 70ba8715c65f47b46844f507ecf1f358, type: 3}
+        indicatorCook: 2
+    - rid: 1194469875601375247
+      type: {class: CTGetIngredient, ns: , asm: Assembly-CSharp}
+      data:
+        completed: 0
+        description: Add Garlic
+        ingredient: {fileID: 11400000, guid: 1ccd6cb8923bf6b4a8041eb4e05a14f0, type: 2}
+        indicator: {fileID: 21300000, guid: 70ba8715c65f47b46844f507ecf1f358, type: 3}
+        indicatorCook: 2
     - rid: 4277192093133438977
       type: {class: RTGetIngredient, ns: , asm: Assembly-CSharp}
       data:

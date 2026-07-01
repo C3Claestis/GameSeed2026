@@ -6,5 +6,6 @@ public class MenuData : ScriptableObject
 {
     public string menuName;
     public Sprite menuSprite;
-    [SerializeReference, SRDemo(typeof(RecipeTask))] public RecipeTask[] recipesTask;
+    [SerializeReference, SRDemo(typeof(RecipeTask))] public RecipeTask[] recipesTask;   
+    [SerializeReference, SRDemo(typeof(CookTask))] public CookTask[] CookTask;    
 }
