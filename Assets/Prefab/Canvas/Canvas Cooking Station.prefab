@@ -803,7 +803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needle: {fileID: 5123021285470673270}
-  rotateSpeed: 5
+  rotateSpeed: 15
   ranges:
   - indicator: 0
     minAngle: 341

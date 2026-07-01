@@ -8,11 +8,11 @@ public class CookingStation : MonoBehaviour, IStation
     [SerializeField] private IndicatorCooking indicatorCooking;
 
     private CashierStation _cashier;
-    private CookingSelector _selector;    
+    private CookingSelector _selector;
 
     private void Awake()
     {
-        _selector = GetComponentInChildren<CookingSelector>();        
+        _selector = GetComponentInChildren<CookingSelector>();
     }
 
     private void OnEnable()
@@ -46,13 +46,20 @@ public class CookingStation : MonoBehaviour, IStation
 
     private void PrepareRecipe()
     {
-        indicatorCooking?.StartIndicator();
-
         if (!_selector || !_cashier) return;
 
         var menu = _cashier.CurrentMenu;
-        if (menu == null) return;
+        if (menu == null || menu.CookTask == null || menu.CookTask.Length == 0)
+            return;
 
+        // Cek apakah semua recipesTask sudah selesai
+        foreach (var task in menu.recipesTask)
+        {
+            if (!task.completed)
+                return;
+        }
+
+        indicatorCooking?.StartIndicator();
         _selector.Initialize(menu);
     }
 

@@ -1,16 +1,16 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private float globalTimer = 200f;
-
-    [SerializeField] private GameObject pembeli;
-
-    private CustomerState currentState = CustomerState.None;
+    [Header("Timer")]
+    [SerializeField] private float globalTimer = 200f;
+    [SerializeField] private Text timerText;
 
     private void Start()
     {
+        UpdateTimerUI();
         InvokeRepeating(nameof(ReduceTimer), 1f, 1f);
     }
 
@@ -18,68 +18,32 @@ public class GameManager : MonoBehaviour
     {
         globalTimer--;
 
-        if (globalTimer > 0 && currentState == CustomerState.None)
+        UpdateTimerUI();
+
+        if (globalTimer > 0)
         {
-            StartCoroutine(SpawnPembeli());
+            
         }
 
         if (globalTimer <= 0)
         {
             globalTimer = 0;
+            UpdateTimerUI();
+
             CancelInvoke(nameof(ReduceTimer));
+
+            // TODO: End Game
         }
     }
 
-    private IEnumerator SpawnPembeli()
+    private void UpdateTimerUI()
     {
-        currentState = CustomerState.Waiting;
-
-        // Jeda sebelum muncul
-        yield return new WaitForSeconds(2f);
-
-        currentState = CustomerState.Appearing;
-
-        CanvasGroup canvas = pembeli.GetComponent<CanvasGroup>();
-
-        if (canvas != null)
-        {
-            yield return StartCoroutine(FadeCanvas(canvas, 0, 1, 0.5f));
-        }
-
-        currentState = CustomerState.Active;
-    }
-
-    private IEnumerator FadeCanvas(CanvasGroup canvas, float start, float end, float duration)
-    {
-        float elapsed = 0f;
-
-        canvas.alpha = start;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            canvas.alpha = Mathf.Lerp(start, end, elapsed / duration);
-            yield return null;
-        }
-
-        canvas.alpha = end;
-    }
-
-    public void ServeCustomer()
-    {
-        if (currentState != CustomerState.Active)
+        if (!timerText)
             return;
 
-        currentState = CustomerState.Served;
+        int minutes = Mathf.FloorToInt(globalTimer / 60f);
+        int seconds = Mathf.FloorToInt(globalTimer % 60f);
 
-        CanvasGroup canvas = pembeli.GetComponent<CanvasGroup>();
-
-        if (canvas != null)
-        {
-            canvas.alpha = 0;
-        }
-
-        // Reset agar bisa spawn lagi
-        currentState = CustomerState.None;
+        timerText.text = $"{minutes:00}:{seconds:00}";
     }
 }
